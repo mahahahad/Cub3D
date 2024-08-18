@@ -1,2 +1,6 @@
-*.dSYM
+*.dSYM/
 *.out
+objects/
+*.o
+cub3D
+.*/
