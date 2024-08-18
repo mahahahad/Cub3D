@@ -4,3 +4,5 @@ objects/
 *.o
 cub3D
 .*/
+mlx_Linux/*.a
+mlx_Linux/obj/
