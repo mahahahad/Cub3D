@@ -6,14 +6,17 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/19 13:48:12 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/08/19 23:57:10 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-/* HEADER FILES */
+/* ************ *
+ * HEADER FILES *
+ * ************ */
+
 # include <fcntl.h>
 # include <stdbool.h>
 # include <stdlib.h>
@@ -21,21 +24,64 @@
 # include "utils.h"
 # include "mlx.h"
 
-/* DATA STRUCTURES */
+/* *************** *
+ * DATA STRUCTURES *
+ * *************** */
+
+typedef struct	s_map
+{
+	int		fd;
+	char	*full;
+	char	**content;
+}	t_map;
+
+typedef struct s_textures
+{
+	char	*north;
+	char	*east;
+	char	*west;
+	char	*south;
+	char	*floor;
+	char	*ceiling;
+}	t_textures;
+
 typedef struct	s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-} t_data;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	t_map		*map;
+	t_textures *textures;
+}	t_data;
 
-/* KEYCODES */
+typedef enum	e_texture_types
+{
+	NORTH,
+	EAST,
+	WEST,
+	SOUTH,
+	FLOOR,
+	CEILING
+}	t_texture_type;
+
+/* ******** *
+ * KEYCODES *
+ * ******** */
+
 # ifdef __linux__
 #  define KEY_ESC 65307
 # else
 #  define KEY_ESC 53
 # endif
 
-/* FUNCTION PROTOTYPES */
+/* ************* *
+ * MISCELLANEOUS *
+ * ************* */
+
+# define WHITESPACE " \t\n\v\r"
+
+/* ******************* *
+ * FUNCTION PROTOTYPES *
+ * ******************* */
 // ...
 
 # endif

@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -Wall -Werror -Wextra
+CFLAGS := -Wall -Werror -Wextra -g3
 NAME := cub3D
 INCLUDES := -Iincludes
 
@@ -69,10 +69,13 @@ clean:
 
 fclean: clean
 	@echo "$(BRED)Deleting library and executable$(RESET)\n"
-	@rm -rf $(NAME)
+	@rm -rf $(NAME)*
 ifeq ($(UNAME), Darwin)
 	@rm -rf libmlx.dylib
 endif
 
+debug: $(MLX)
+	@$(CC) $(CFLAGS) $(INCLUDES) -g3 -fsanitize=address $(SRCS) $(MLX) $(MLX_FLAGS) -o $(NAME)_debug
+	@echo "$(BYELLOW)Made Cub3D DEBUG$(RESET)"
 
-.PHONY: all bonus clean fclean re
+.PHONY: all bonus clean fclean re debug
