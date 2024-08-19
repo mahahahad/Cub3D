@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/19 00:28:39 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/08/19 13:48:12 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct	s_data
 /* KEYCODES */
 # ifdef __linux__
 #  define KEY_ESC 65307
+# else
+#  define KEY_ESC 53
 # endif
 
 /* FUNCTION PROTOTYPES */

@@ -4,5 +4,8 @@ objects/
 *.o
 cub3D
 .*/
+*.dylib
 mlx_Linux/*.a
 mlx_Linux/obj/
+mlx_Darwin/*.swiftmodule
+mlx_Darwin/*.swiftdoc
