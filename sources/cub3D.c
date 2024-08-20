@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/20 21:02:08 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:12:48 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,21 @@ void	print_info(t_data data)
 	}
 }
 
+bool	has_invalid_chars(char *map_full)
+{
+	int	i;
+
+	i = 0;
+	while (map_full[i])
+	{
+		if (!ft_strchr(WHITESPACE, map_full[i]) \
+			&& !ft_strchr("10NEWS", map_full[i]))
+			return (ft_err("Invalid character detected"));
+		i++;
+	}
+	return (false);
+}
+
 int	verify_map(t_data *data)
 {
 	if (!data->textures->north)
@@ -250,6 +265,8 @@ int	verify_map(t_data *data)
 		return (ft_err("No ceiling texture detected"));
 	else if (!data->map->full)
 		return (ft_err("No map found"));
+	else if (has_invalid_chars(data->map->full))
+		return (1);
 	return (0);
 }
 
