@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 18:20:49 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/19 23:25:54 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/08/20 14:59:30 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #  define BUFFER_SIZE 42
 # endif
 
+int		ft_err(char *msg);
 void	ft_free_2d_arr(char **arr);
 void	ft_putendl_fd(const char *s, int fd);
 char	**ft_split(char const *s, char c);

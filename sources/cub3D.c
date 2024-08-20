@@ -6,12 +6,28 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/20 00:23:52 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:02:08 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include <stdio.h>
+
+void	free_textures(t_textures *textures)
+{
+	if (textures->north)
+		free(textures->north);
+	if (textures->east)
+		free(textures->east);
+	if (textures->west)
+		free(textures->west);
+	if (textures->south)
+		free(textures->south);
+	if (textures->floor)
+		free(textures->floor);
+	if (textures->ceiling)
+		free(textures->ceiling);
+}
 
 /**
  * @brief Cleanly destroy the window pointer from mlx and exit the game.
@@ -23,6 +39,7 @@ int	handle_destroy(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	close(data->map->fd);
+	free_textures(data->textures);
 	exit(0);
 	return (0);
 }
@@ -37,17 +54,17 @@ int	handle_keypress(int keysym, t_data *data)
 bool	is_set(t_data *data, t_texture_type type)
 {
 	if (type == NORTH && data->textures->north)
-		return (ft_putendl_fd("Error\nDuplicate north texture detected.", 2), 1);
+		return (ft_err("Duplicate north texture detected."));
 	if (type == EAST && data->textures->east)
-		return (ft_putendl_fd("Error\nDuplicate east texture detected.", 2), 1);
+		return (ft_err("Duplicate east texture detected."));
 	if (type == WEST && data->textures->west)
-		return (ft_putendl_fd("Error\nDuplicate west texture detected.", 2), 1);
+		return (ft_err("Duplicate west texture detected."));
 	if (type == SOUTH && data->textures->south)
-		return (ft_putendl_fd("Error\nDuplicate south texture detected.", 2), 1);
+		return (ft_err("Duplicate south texture detected."));
 	if (type == FLOOR && data->textures->floor)
-		return (ft_putendl_fd("Error\nDuplicate floor texture detected.", 2), 1);
+		return (ft_err("Duplicate floor texture detected."));
 	if (type == CEILING && data->textures->ceiling)
-		return (ft_putendl_fd("Error\nDuplicate ceiling texture detected.", 2), 1);
+		return (ft_err("Duplicate ceiling texture detected."));
 	return (0);
 }
 
@@ -68,22 +85,6 @@ int	assign_texture(t_texture_type type, char *texture, t_data *data)
 	else if (type == CEILING)
 		data->textures->ceiling = ft_strtrim(texture, WHITESPACE);
 	return (0);
-}
-
-void	free_textures(t_data *data)
-{
-	if (data->textures->north)
-		free(data->textures->north);
-	if (data->textures->east)
-		free(data->textures->east);
-	if (data->textures->west)
-		free(data->textures->west);
-	if (data->textures->south)
-		free(data->textures->south);
-	if (data->textures->floor)
-		free(data->textures->floor);
-	if (data->textures->ceiling)
-		free(data->textures->ceiling);
 }
 
 /**
@@ -109,9 +110,9 @@ int	set_game_data(char *line, t_data *data)
 
 	processed_line = ft_strtrim(line, WHITESPACE);
 	if (processed_line[0] == '0')
-		return (free_textures(data), \
+		return (free_textures(data->textures), \
 			free(processed_line), \
-			ft_putendl_fd("Error\nMap must be surrounded by walls", 2), 1);
+			ft_err("Map must be surrounded by walls"));
 	if (processed_line[0] == '1')
 	{
 		if (!data->map->full)
@@ -124,10 +125,14 @@ int	set_game_data(char *line, t_data *data)
 	{
 		if (!ft_strncmp(processed_line, keywords[i], ft_strlen(keywords[i])))
 		{
+			if (data->map->full)
+				return (free_textures(data->textures), \
+					free(processed_line), \
+					ft_err("Misplaced texture path found."));
 			if (assign_texture(i, \
 				processed_line + ft_strlen(keywords[i]), \
 				data) == 1)
-				return (free_textures(data), \
+				return (free_textures(data->textures), \
 					free(processed_line), 1);
 			break ;
 		}
@@ -189,16 +194,6 @@ bool	is_valid_ext(char *file_name)
 	return (free(ext), true);
 }
 
-void	init_textures(t_textures *textures)
-{
-	textures->north = NULL;
-	textures->east = NULL;
-	textures->west = NULL;
-	textures->south = NULL;
-	textures->floor = NULL;
-	textures->ceiling = NULL;
-}
-
 void	print_info(t_data data)
 {
 	puts("Texture Paths: ");
@@ -239,6 +234,25 @@ void	print_info(t_data data)
 	}
 }
 
+int	verify_map(t_data *data)
+{
+	if (!data->textures->north)
+		return (ft_err("No north texture detected"));
+	else if (!data->textures->east)
+		return (ft_err("No east texture detected"));
+	else if (!data->textures->west)
+		return (ft_err("No west texture detected"));
+	else if (!data->textures->south)
+		return (ft_err("No south texture detected"));
+	else if (!data->textures->floor)
+		return (ft_err("No floor texture detected"));
+	else if (!data->textures->ceiling)
+		return (ft_err("No ceiling texture detected"));
+	else if (!data->map->full)
+		return (ft_err("No map found"));
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -246,17 +260,18 @@ int	main(int argc, char **argv)
 	t_textures	textures;
 
 	if (argc != 2)
-		return (ft_putendl_fd("Error\nPlease enter a map file.", 2), 1);
+		return (ft_err("Please enter a map file."));
 	if (!is_valid_ext(argv[1]))
-		return (ft_putendl_fd("Error\nPlease enter a .cub map file", 2), 1);
+		return (ft_err("Please enter a .cub map file"));
 	map.fd = open(argv[1], O_RDONLY);
 	if (map.fd < 0)
-		return (ft_putendl_fd("Error\nMap could not be opened.", 2), 1);
+		return (ft_err("Map could not be opened."));
 	data.map = &map;
-	init_textures(&textures);
 	data.textures = &textures;
 	if (process_map(&data) == 1)
 		return (close(map.fd), 1);
+	if (verify_map(&data) == 1)
+		return (close(map.fd), free_textures(data.textures), 1);
 	print_info(data);
 	data.mlx_ptr = mlx_init();
 	data.win_ptr = mlx_new_window(data.mlx_ptr, 1280, 720, "cub3D");
