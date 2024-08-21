@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_2d_arr.c                                   :+:      :+:    :+:   */
+/*   free_textures.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 18:09:55 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/19 22:46:07 by maabdull         ###   ########.fr       */
+/*   Created: 2024/08/20 22:09:15 by maabdull          #+#    #+#             */
+/*   Updated: 2024/08/20 22:09:21 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "cub3D.h"
 
-/**
- * @brief Frees each string inside the 2d array provided to the function,
- * followed by freeing the entire array itself
- *
- * @param arr
- */
-void	ft_free_2d_arr(char **arr)
+void	free_textures(t_textures *textures)
 {
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-	{
-		free(arr[i]);
-		arr[i] = NULL;
-		i++;
-	}
-	free(arr);
+	if (textures->north)
+		free(textures->north);
+	if (textures->east)
+		free(textures->east);
+	if (textures->west)
+		free(textures->west);
+	if (textures->south)
+		free(textures->south);
+	if (textures->floor)
+		free(textures->floor);
+	if (textures->ceiling)
+		free(textures->ceiling);
 }

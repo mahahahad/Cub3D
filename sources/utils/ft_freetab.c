@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_err.c                                           :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 14:55:31 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/20 23:16:19 by maabdull         ###   ########.fr       */
+/*   Created: 2024/03/06 18:09:55 by maabdull          #+#    #+#             */
+/*   Updated: 2024/08/21 12:21:46 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	ft_err(char *msg)
+/**
+ * @brief Frees each string inside the 2d array provided to the function,
+ * followed by freeing the entire array itself
+ *
+ * @param arr
+ */
+void	ft_freetab(char **arr)
 {
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(msg, 2);
-	return (EXIT_FAILURE);
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
 }

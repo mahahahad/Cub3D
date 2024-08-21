@@ -5,14 +5,12 @@ INCLUDES := -Iincludes
 
 SRCS_DIR := sources
 OBJS_DIR := objects
-SUB_DIRS := $(shell find $(SRCS_DIR) -type d -print)
-UTILS_DIR := $(SRCS_DIR)/utils
-
-MODULES := $(UTILS_DIR)
+SUB_DIRS := $(shell find $(SRCS_DIR) -mindepth 1 -type d -print)
+MODULES := $(SUB_DIRS)
 
 include $(patsubst %, %/module.mk, $(MODULES))
 
-SRCS += $(addprefix $(SRCS_DIR)/, cub3D.c)
+SRCS += $(addprefix $(SRCS_DIR)/, handlers.c cub3D.c)
 
 OBJS := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 
