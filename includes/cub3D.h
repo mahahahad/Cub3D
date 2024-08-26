@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/21 23:40:33 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/08/26 22:37:16 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@
 # include <unistd.h>
 # include "utils.h"
 # include "mlx.h"
+# include <math.h>
+#include <stdio.h>
+
+# define SQUARE 60
+#define PI 3.14159265359
 
 /* *************** *
  * DATA STRUCTURES *
@@ -49,6 +54,7 @@ typedef struct s_textures
 typedef struct s_player
 {
 	char	direction;
+	int		angle;
 	int		x;
 	int		y;
 }	t_player;
@@ -101,7 +107,12 @@ typedef enum e_texture_types
 // Setup
 void	init_data(t_data *data, t_player *player, t_map *map, \
 	t_textures *textures);
+void init_angle(t_data *data);
 int		are_args_valid(int argc, char **argv);
+
+// rendering
+void render_map(t_data data);
+void draw_player(int i, int j, t_data *data);
 
 // Handlers
 int		handle_destroy(t_data *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/21 22:54:24 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/08/26 22:41:40 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 /**
  * @brief Cleanly destroy the window pointer from mlx and exit the game.
- * 
+ *
  * @param data The struct containing all the variables that need freeing.
- * @return int 
+ * @return int
  */
 int	handle_destroy(t_data *data)
 {
@@ -27,10 +27,40 @@ int	handle_destroy(t_data *data)
 	exit(0);
 	return (0);
 }
+void move_up(t_data *data)
+{
+	if(data->map->grid[(int)round(data->player->y + sin(90 * (PI / 180)))/SQUARE][(int)round((data->player->x)/SQUARE)] != '1')
+		data->player->y= data->player->y + sin(90 * (PI / 180));
+}
+void move_down(t_data *data)
+{
+	if(data->map->grid[(data->player->y + 20)/SQUARE][((data->player->x)/SQUARE)] != '1')
+		data->player->y= data->player->y + 5;
+}
+void move_right(t_data *data)
+{
+	if(data->map->grid[((data->player->y)/SQUARE)][((data->player->x  + 20)/SQUARE)] != '1')
+		data->player->x= data->player->x + 5;
+}
+void move_left(t_data *data)
+{
+	if(data->map->grid[(int)round(data->player->y)/SQUARE][(int)round((data->player->x - 5) /SQUARE)] != '1')
+		data->player->x = data->player->x - 5;
+}
 
 int	handle_keypress(int keysym, t_data *data)
 {
 	if (keysym == KEY_ESC)
 		return (handle_destroy(data));
+	if(keysym == 13)
+		move_up(data);
+	else if(keysym == 1)
+		move_down(data);
+	else if(keysym == 2)
+		move_right(data);
+	else if(keysym == 0)
+		move_left(data);
+	render_map(*data);
+	draw_player(data->player->x,data->player->y, data);
 	return (0);
 }

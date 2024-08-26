@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/21 22:51:36 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/08/26 22:42:45 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,14 @@ int	main(int argc, char **argv)
 		return (close(data.map->fd), free(data.map->full), \
 			ft_freetab(map.grid), free_textures(data.textures), EXIT_FAILURE);
 	print_info(data);
+	init_angle(&data);
 	data.mlx_ptr = mlx_init();
 	data.win_ptr = mlx_new_window(data.mlx_ptr, 1280, 720, "cub3D");
+	// printf("%d\n",data.map->rows);
+	render_map(data);
+	draw_player(player.x, player.y, data.mlx_ptr);
 	mlx_hook(data.win_ptr, 17, 1L << 2, handle_destroy, &data);
-	mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
+	// mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
 	mlx_loop(data.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

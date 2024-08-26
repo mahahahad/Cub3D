@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -Wall -Werror -Wextra -g3
+CFLAGS := -Wall -Werror -Wextra -g3 
 NAME := cub3D
 INCLUDES := -Iincludes
 
