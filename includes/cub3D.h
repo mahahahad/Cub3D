@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/26 22:37:16 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/08/27 22:42:06 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <math.h>
 #include <stdio.h>
 
-# define SQUARE 60
+# define SQUARE 30
 #define PI 3.14159265359
 
 /* *************** *
@@ -111,7 +111,7 @@ void init_angle(t_data *data);
 int		are_args_valid(int argc, char **argv);
 
 // rendering
-void render_map(t_data data);
+void render_map(t_data *data);
 void draw_player(int i, int j, t_data *data);
 
 // Handlers

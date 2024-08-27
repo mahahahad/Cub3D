@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/26 22:42:45 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/08/27 22:52:56 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ int	main(int argc, char **argv)
 	print_info(data);
 	init_angle(&data);
 	data.mlx_ptr = mlx_init();
-	data.win_ptr = mlx_new_window(data.mlx_ptr, 1280, 720, "cub3D");
-	// printf("%d\n",data.map->rows);
-	render_map(data);
-	draw_player(player.x, player.y, data.mlx_ptr);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, 30 * 60, 20 * 60, "cub3D");
+	render_map(&data);
+	draw_player(player.x * SQUARE, player.y * SQUARE, &data);
+	printf("%d \n ",player.angle);
 	mlx_hook(data.win_ptr, 17, 1L << 2, handle_destroy, &data);
-	// mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
+	mlx_hook(data.win_ptr, 2, 1L << 0, handle_keypress, &data);
 	mlx_loop(data.mlx_ptr);
 	return (EXIT_SUCCESS);
 }

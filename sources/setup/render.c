@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:01:22 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/08/26 22:36:33 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/08/28 00:04:08 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,69 @@ int return_color(char c)
 {
 	if (c == '1')
 		return(0x800080);
-	else if(c == '0' || c == 'N')
+	else if(c == '0' || c == 'N' || c == 'W'|| c == 'S'|| c == 'E')
 		return(0xF0C807);
-	return(0);
+	return(0x000000);
 }
+void draw_player_stick(t_data *data)
+{
+	int i;
+	int j;
+	i = (data->player->x *  SQUARE) + 5;
+	j = (data->player->y * SQUARE) + 5;
+	int counter;
+	counter = 0;
+	data->player->angle = 45;
+	if(data->player->angle == 90)
+	{
+		while(counter < 20)
+		{
+				mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
+				j--;
+				counter++;
+		}
+	}
+	else if(data->player->angle == 270)
+	{
+		while(counter < 20)
+		{
+				mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
+				j++;
+				counter++;
+		}
+	}
+	else if(data->player->angle == 0)
+	{
+		while(counter < 20)
+		{
+				mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
+				i++;
+				counter++;
+		}
+	}
+	else if(data->player->angle == 180)
+	{
+		while(counter < 20)
+		{
+				mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
+				i--;
+				counter++;
+		}
+	}
+	else
+	{
+		i = i + (cos(data->player->angle *(PI / 180)));
+		j =j + (sin(data->player->angle *(PI / 180)));
+		while(counter < 20)
+		{
+				mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
+				i++;
+				j--;
+				counter++;
+		}
+	}
+}
+
 void draw_player(int i, int j, t_data *data)
 {
 	int square_width;
@@ -53,11 +112,11 @@ void draw_player(int i, int j, t_data *data)
 	square_height = 0;
 
 	or_i = i;
-	while (square_height < 20)
+	while (square_height < 10)
 	{
 		square_width= 0;
 		i = or_i;
-		while (square_width < 20)
+		while (square_width < 10)
 		{
 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j,0xFF8D85 );
 			square_width++;
@@ -66,6 +125,7 @@ void draw_player(int i, int j, t_data *data)
 		j++;
 		square_height++;
 	}
+	draw_player_stick(data);
 }
 
 void find_player_loc(t_data *data)
@@ -79,6 +139,7 @@ void find_player_loc(t_data *data)
 	j = 0;
 	col = 0;
 	rows_count = 0;
+
 	while(rows_count != data->map->rows)
 	{
 		i = 0;
@@ -96,7 +157,7 @@ void find_player_loc(t_data *data)
 	}
 }
 
-void render_map(t_data data)
+void render_map(t_data *data)
 {
 	int j;
 	int i;
@@ -105,14 +166,16 @@ void render_map(t_data data)
 	i = 0;
 	j = 0;
 	col = 0;
-
-	while(j != data.map->rows)
+	while(j < (data->map->rows) )
 	{
 		i = 0;
-		while (i < ((int)ft_strlen(data.map->grid[j])))
+		while (i < ((int)ft_strlen(data->map->grid[j])))
 		{
-			col = return_color(data.map->grid[j][i]);
-			draw_square(i * SQUARE, j* SQUARE, &data, col);
+			if(data->map->grid[j][i] != ' ')
+			{
+				col = return_color(data->map->grid[j][i]);
+				draw_square(i * SQUARE, j* SQUARE, data, col);
+			}
 			i++;
 		}
 		j++;

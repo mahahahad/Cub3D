@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/26 22:41:40 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/08/27 22:41:27 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	handle_keypress(int keysym, t_data *data)
 		move_right(data);
 	else if(keysym == 0)
 		move_left(data);
-	render_map(*data);
+	render_map(data);
 	draw_player(data->player->x,data->player->y, data);
 	return (0);
 }

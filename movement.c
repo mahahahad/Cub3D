@@ -6,31 +6,31 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:46:40 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/08/26 20:31:51 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/08/28 00:11:05 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void move_up(t_window_info **mlx)
+void move_up(t_data *data)
 {
-	if((*mlx)->map[(int)round((*mlx)->player.y + sin(90 * (PI / 180)))/SQUARE][(int)round(((*mlx)->player.x)/SQUARE)] != '1')
-		(*mlx)->player.y= (*mlx)->player.y + sin(90 * (PI / 180));
+	if(data->map->grid[(int)round(data->player->y + sin(90 * (PI / 180)))/SQUARE][(int)round((data->player->x)/SQUARE)] != '1')
+		data->player->y= data->player->y + sin(90 * (PI / 180));
 }
-void move_down(t_window_info **mlx)
+void move_down(t_data *data)
 {
-	if((*mlx)->map[((*mlx)->player.y + 20)/SQUARE][(((*mlx)->player.x)/SQUARE)] != '1')
-		(*mlx)->player.y= (*mlx)->player.y + 5;
+	if(data->map->grid[(data->player->y + 20)/SQUARE][((data->player->x)/SQUARE)] != '1')
+		data->player->y= data->player->y + 5;
 }
-void move_right(t_window_info **mlx)
+void move_right(t_data *data)
 {
-	if((*mlx)->map[(((*mlx)->player.y)/SQUARE)][(((*mlx)->player.x  + 20)/SQUARE)] != '1')
-		(*mlx)->player.x= (*mlx)->player.x + 5;
+	if(data->map->grid[((data->player->y)/SQUARE)][((data->player->x  + 20)/SQUARE)] != '1')
+		data->player->x= data->player->x + 5;
 }
-void move_left(t_window_info **mlx)
+void move_left(t_data *data)
 {
-	if((*mlx)->map[(int)round((*mlx)->player.y)/SQUARE][(int)round(((*mlx)->player.x - 5) /SQUARE)] != '1')
-		(*mlx)->player.x = (*mlx)->player.x - 5;
+	if(data->map->grid[(int)round(data->player->y)/SQUARE][(int)round((data->player->x - 5) /SQUARE)] != '1')
+		data->player->x = data->player->x - 5;
 }
 
 // int move(int key,t_window_info **mlx)
