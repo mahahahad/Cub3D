@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/27 22:42:06 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/08/30 16:45:29 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include <stdio.h>
 
 # define SQUARE 30
+# define SPEED 5
 #define PI 3.14159265359
 
 /* *************** *
@@ -112,7 +113,7 @@ int		are_args_valid(int argc, char **argv);
 
 // rendering
 void render_map(t_data *data);
-void draw_player(int i, int j, t_data *data);
+void draw_player(double i, double j, t_data *data);
 
 // Handlers
 int		handle_destroy(t_data *data);

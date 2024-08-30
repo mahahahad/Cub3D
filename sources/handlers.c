@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/27 22:41:27 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/08/30 16:47:35 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,26 @@ int	handle_destroy(t_data *data)
 }
 void move_up(t_data *data)
 {
-	if(data->map->grid[(int)round(data->player->y + sin(90 * (PI / 180)))/SQUARE][(int)round((data->player->x)/SQUARE)] != '1')
-		data->player->y= data->player->y + sin(90 * (PI / 180));
+	if(data->map->grid[(int)round (data->player->y - (SPEED * sin(data->player->angle  * (PI / 180))))/SQUARE]
+		[(int)round (data->player->x + (SPEED * cos(data->player->angle  * (PI / 180))))/ SQUARE] != '1')
+	{
+		data->player->y =(int)round (data->player->y  - (SPEED * sin(data->player->angle  * (PI / 180))));
+		data->player->x = (int)round (data->player->x + (SPEED * cos(data->player->angle  * (PI / 180))));
+	}
+
 }
 void move_down(t_data *data)
 {
-	if(data->map->grid[(data->player->y + 20)/SQUARE][((data->player->x)/SQUARE)] != '1')
-		data->player->y= data->player->y + 5;
+	if(data->map->grid[(int)round (data->player->y + (SPEED * sin(data->player->angle  * (PI / 180))))/SQUARE]
+		[(int)round (data->player->x - (SPEED * cos(data->player->angle  * (PI / 180))))/ SQUARE] != '1')
+	{
+		data->player->y =(int)round (data->player->y + (SPEED * sin(data->player->angle  * (PI / 180))));
+		data->player->x = (int)round (data->player->x - (SPEED * cos(data->player->angle  * (PI / 180))));
+	}
 }
 void move_right(t_data *data)
 {
-	if(data->map->grid[((data->player->y)/SQUARE)][((data->player->x  + 20)/SQUARE)] != '1')
+	if(data->map->grid[((data->player->y) / SQUARE)][((data->player->x  + 20)/SQUARE)] != '1')
 		data->player->x= data->player->x + 5;
 }
 void move_left(t_data *data)
@@ -61,6 +70,6 @@ int	handle_keypress(int keysym, t_data *data)
 	else if(keysym == 0)
 		move_left(data);
 	render_map(data);
-	draw_player(data->player->x,data->player->y, data);
+	draw_player(data->player->x ,data->player->y, data);
 	return (0);
 }

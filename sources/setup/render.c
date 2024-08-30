@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:01:22 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/08/28 00:04:08 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/08/30 16:22:44 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,12 @@ int return_color(char c)
 }
 void draw_player_stick(t_data *data)
 {
-	int i;
-	int j;
-	i = (data->player->x *  SQUARE) + 5;
-	j = (data->player->y * SQUARE) + 5;
+	double i;
+	double j;
+	i = (data->player->x ) + 5;
+	j = (data->player->y) + 5;
 	int counter;
 	counter = 0;
-	data->player->angle = 45;
 	if(data->player->angle == 90)
 	{
 		while(counter < 20)
@@ -103,7 +102,7 @@ void draw_player_stick(t_data *data)
 	}
 }
 
-void draw_player(int i, int j, t_data *data)
+void draw_player(double i, double j, t_data *data)
 {
 	int square_width;
 	int square_height;
@@ -128,34 +127,6 @@ void draw_player(int i, int j, t_data *data)
 	draw_player_stick(data);
 }
 
-void find_player_loc(t_data *data)
-{
-	int j;
-	int i;
-	int col ;
-	int rows_count;
-
-	i = 0;
-	j = 0;
-	col = 0;
-	rows_count = 0;
-
-	while(rows_count != data->map->rows)
-	{
-		i = 0;
-		while (data->map->grid[j][i] != '\0')
-		{
-			if(data -> map->grid[j][i]== 'N' || data -> map->grid[j][i]== 'W'||data -> map->grid[j][i]== 'E'||data -> map->grid[j][i]== 'S')
-			{
-				data->player->direction = data->map->grid[j][i];
-				data->player->x = i * SQUARE;
-				data->player->y = j * SQUARE;
-			}
-			i++;
-		}
-		j++;
-	}
-}
 
 void render_map(t_data *data)
 {
