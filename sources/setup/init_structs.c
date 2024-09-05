@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 22:43:01 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/03 20:05:57 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/05 12:33:12 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ void	init_data(t_data *data, t_player *player, t_map *map, \
 	init_textures(textures);
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
+	data->hx =0;
+	data->hy = 0;
+	data->vx = 0;
+	data->vy = 0;
 	data->map = map;
 	printf("%d\n", data->map->rows);
 	data->player = player;
