@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:37:11 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/04 03:55:16 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/05 13:22:38 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	update_player(t_data *data, int x, int y)
 {
-	if (!data->player->direction)
+	if (data->player->direction)
 		return (ft_err("Multiple players found"));
 	data->player->direction = data->map->grid[y][x];
 	data->player->y = y ;

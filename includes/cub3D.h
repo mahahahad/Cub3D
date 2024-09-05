@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 11:08:26 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/05 13:12:37 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,7 @@ typedef enum e_texture_types
  * ******************* */
 
 // Setup
-void	init_data(t_data *data, t_player *player, t_map *map, \
-	t_textures *textures);
+void	init_data(t_data *data);
 void init_angle(t_data *data);
 int		are_args_valid(int argc, char **argv);
 
