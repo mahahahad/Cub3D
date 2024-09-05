@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/30 16:45:29 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/05 11:08:26 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@
 
 # define SQUARE 30
 # define SPEED 5
-#define PI 3.14159265359
+# define PI 3.14159265359
+# define WIDTH 1800
+# define HEIGHT 1200
 
 /* *************** *
  * DATA STRUCTURES *
@@ -52,6 +54,8 @@ typedef struct s_textures
 	char	*ceiling;
 }	t_textures;
 
+
+
 typedef struct s_player
 {
 	char	direction;
@@ -66,13 +70,26 @@ typedef struct s_coords
 	int	y;
 }	t_coords;
 
+typedef struct s_img {
+	void	*img;
+	char	*img_pixels_ptr;
+	int		bits_per_pixel;
+	int		line_len;
+	int		endian;
+}				t_img;
+
 typedef struct s_data
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
+	t_img		img;
 	t_map		*map;
 	t_textures	*textures;
 	t_player	*player;
+	float		hx;
+	float		hy;
+	float		vx;
+	float		vy;
 }	t_data;
 
 typedef enum e_texture_types
@@ -112,8 +129,12 @@ void init_angle(t_data *data);
 int		are_args_valid(int argc, char **argv);
 
 // rendering
+void  draw_square(int i, int j,t_data *data, int col);
+void	my_pixel_put(t_img *img, int x, int y, int color);
 void render_map(t_data *data);
 void draw_player(double i, double j, t_data *data);
+// raycasting
+void raycast(t_data *data);
 
 // Handlers
 int		handle_destroy(t_data *data);
