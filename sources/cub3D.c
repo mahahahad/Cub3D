@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 13:18:54 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/05 16:59:37 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ int	main(int argc, char **argv)
 												&(data->img.bits_per_pixel),
 												&(data->img.line_len),
 												&(data->img.endian));
-	printf("My address is %p\n", data->img.img);
 	if (data->img.img == NULL)
 	{
 		printf("error : img ptr\n");
 		return (1);
 	}
+	printf("hello\n");
 	set_player_pixs(data);
 	render_map(data);
 	draw_player(data->player->x, data->player->y , data);

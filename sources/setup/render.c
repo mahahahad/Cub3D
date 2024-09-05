@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:01:22 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/04 23:12:18 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/05 16:52:28 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ void render_map(t_data *data)
 			if(data->map->grid[j][i] != ' ')
 			{
 				col = return_color(data->map->grid[j][i]);
-				raycast(data);
+				// raycast(data);
 				draw_square(i * SQUARE, j* SQUARE, data, col);
 			}
 			i++;
