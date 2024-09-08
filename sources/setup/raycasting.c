@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:04:39 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/05 17:59:38 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/07 19:51:26 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,4 +132,5 @@ void raycast(t_data *data)
 		ray_angle = ray_angle + step_angle;
 		rays_count++;
 	}
+	(void) ray_length;
 }

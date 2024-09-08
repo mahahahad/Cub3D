@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 13:28:37 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/07 20:41:02 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,29 @@ typedef enum e_texture_types
  * ******** */
 
 # ifdef __linux__
+// Linux keycodes
 #  define KEY_ESC 65307
+#  define KEY_W 119
+#  define KEY_A 97
+#  define KEY_S 115
+#  define KEY_D 100
+#  define KEY_Q 113
+#  define KEY_ARROW_UP 65362
+#  define KEY_ARROW_LEFT 65361
+#  define KEY_ARROW_DOWN 65364
+#  define KEY_ARROW_RIGHT 65363
 # else
+// macOS key code macros
 #  define KEY_ESC 53
+#  define KEY_W 13
+#  define KEY_A 0
+#  define KEY_S 1
+#  define KEY_D 2
+#  define KEY_Q 12
+#  define KEY_ARROW_UP 126
+#  define KEY_ARROW_LEFT 123
+#  define KEY_ARROW_DOWN 125
+#  define KEY_ARROW_RIGHT 124
 # endif
 
 /* ************* *

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 16:59:08 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/08 22:56:10 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,46 +29,83 @@ int	handle_destroy(t_data *data)
 }
 void move_up(t_data *data)
 {
-	if(data->map->grid[(int)round (data->player->y - (SPEED * sin(data->player->angle  * (PI / 180))))/SQUARE]
-		[(int)round (data->player->x + (SPEED * cos(data->player->angle  * (PI / 180))))/ SQUARE] != '1')
-	{
-		data->player->y =(int)round (data->player->y  - (SPEED * sin(data->player->angle  * (PI / 180))));
-		data->player->x = (int)round (data->player->x + (SPEED * cos(data->player->angle  * (PI / 180))));
-	}
+	int new_y;
+	int new_x; 
 
+	new_y = (int) round(data->player->y - \
+		(SPEED * sin(data->player->angle * (PI / 180))));
+	new_x = (int) round(data->player->x + \
+		(SPEED * cos(data->player->angle * (PI / 180))));
+	printf("Angle: %d,\nX: %d,\nY: %d\n", data->player->angle, data->player->x, data->player->y);
+	if(data->map->grid[new_y / SQUARE][new_x / SQUARE] != '1')
+	{
+		data->player->y = new_y;
+		data->player->x = new_x;
+	}
 }
 void move_down(t_data *data)
 {
-	if(data->map->grid[(int)round (data->player->y + (SPEED * sin(data->player->angle  * (PI / 180))))/SQUARE]
-		[(int)round (data->player->x - (SPEED * cos(data->player->angle  * (PI / 180))))/ SQUARE] != '1')
+	int new_y;
+	int new_x;
+
+	new_y = (int) round(data->player->y + \
+		(SPEED * sin(data->player->angle * (PI / 180))));
+	new_x = (int) round(data->player->x - \
+		(SPEED * cos(data->player->angle * (PI / 180))));
+	if(data->map->grid[new_y / SQUARE][new_x / SQUARE] != '1')
 	{
-		data->player->y =(int)round (data->player->y + (SPEED * sin(data->player->angle  * (PI / 180))));
-		data->player->x = (int)round (data->player->x - (SPEED * cos(data->player->angle  * (PI / 180))));
+		data->player->y = new_y;
+		data->player->x = new_x;
 	}
 }
 void move_right(t_data *data)
 {
-	if(data->map->grid[((data->player->y) / SQUARE)][((data->player->x  + 20)/SQUARE)] != '1')
-		data->player->x= data->player->x + 5;
+	int new_y;
+	int new_x;
+
+	new_y = (int) round(data->player->y - \
+		(SPEED * sin((data->player->angle - 90) * (PI / 180))));
+	new_x = (int) round(data->player->x + \
+		(SPEED * cos((data->player->angle - 90) * (PI / 180))));
+	if(data->map->grid[(new_y / SQUARE)][new_x / SQUARE] != '1')
+	{
+		data->player->y = new_y;
+		data->player->x = new_x;
+	}
 }
 void move_left(t_data *data)
 {
-	if(data->map->grid[(int)round(data->player->y)/SQUARE][(int)round((data->player->x - 5) /SQUARE)] != '1')
-		data->player->x = data->player->x - 5;
+	int new_y;
+	int new_x;
+
+	new_y = (int) round(data->player->y + \
+		(SPEED * sin((data->player->angle - 90) * (PI / 180))));
+	new_x = (int) round(data->player->x - \
+		(SPEED * cos((data->player->angle - 90) * (PI / 180))));
+	if(data->map->grid[(new_y / SQUARE)][new_x / SQUARE] != '1')
+	{
+		data->player->y = new_y;
+		data->player->x = new_x;
+	}
 }
 
 int	handle_keypress(int keysym, t_data *data)
 {
 	if (keysym == KEY_ESC)
 		return (handle_destroy(data));
-	if(keysym == 13)
+	if(keysym == KEY_W)
 		move_up(data);
-	else if(keysym == 1)
+	else if(keysym == KEY_S)
 		move_down(data);
-	else if(keysym == 2)
+	else if(keysym == KEY_D)
 		move_right(data);
-	else if(keysym == 0)
+	else if(keysym == KEY_A)
 		move_left(data);
+	else if (keysym == KEY_ARROW_LEFT)
+		data->player->angle += SPEED;
+	else if (keysym == KEY_ARROW_RIGHT)
+		data->player->angle -= SPEED;
+	data->player->angle %= 360;
 	render_map(data);
 	draw_player(data->player->x ,data->player->y, data);
 	raycast(data);
