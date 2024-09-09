@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/09 03:27:53 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/09 05:34:49 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	main(int argc, char **argv)
 	printf("im here after raycasting its not seg faulting anymore\n");
 	mlx_hook(data->win_ptr, 17, 1L << 2, handle_destroy, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, handle_keypress, data);
+	// mlx_key_release_hook(data->win_ptr, handle_keypress, data);
 	mlx_loop(data->mlx_ptr);
 	return (EXIT_SUCCESS);
 }
