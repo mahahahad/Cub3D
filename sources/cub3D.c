@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 16:59:37 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/09 03:27:53 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	print_info(t_data data)
 }
 void set_player_pixs(t_data *data)
 {
-	data->player->x = (data->player->x + 0.5) * SQUARE;
-	data->player->y = (data->player->y + 0.5)* SQUARE;
+	data->player->x = (data->player->x * SQUARE ) +(SQUARE / 2) ;
+	data->player->y = (data->player->y* SQUARE ) +(SQUARE / 2) ;
 }
 
 int	main(int argc, char **argv)
@@ -90,6 +90,7 @@ int	main(int argc, char **argv)
 	}
 	printf("hello\n");
 	set_player_pixs(data);
+	draw_background(data);
 	render_map(data);
 	draw_player(data->player->x, data->player->y , data);
 	raycast(data);

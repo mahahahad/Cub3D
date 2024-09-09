@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 13:28:37 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/08 19:32:44 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@
 # include <math.h>
 #include <stdio.h>
 
-# define SQUARE 30
+# define SQUARE 16
 # define SPEED 5
 # define PI 3.14159265359
 # define WIDTH 1800
 # define HEIGHT 1200
+# define R_SPEED 1
 
 /* *************** *
  * DATA STRUCTURES *
@@ -60,8 +61,8 @@ typedef struct s_player
 {
 	char	direction;
 	int		angle;
-	int		x;
-	int		y;
+	float		x;
+	float		y;
 }	t_player;
 
 typedef struct s_coords
@@ -132,6 +133,7 @@ void  draw_square(int i, int j,t_data *data, int col);
 void	my_pixel_put(t_img *img, int x, int y, int color);
 void render_map(t_data *data);
 void draw_player(double i, double j, t_data *data);
+void draw_background(t_data *data);
 // raycasting
 void raycast(t_data *data);
 

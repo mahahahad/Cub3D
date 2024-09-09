@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 16:59:08 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/09 02:27:39 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,21 @@ void move_down(t_data *data)
 		data->player->x = (int)round (data->player->x - (SPEED * cos(data->player->angle  * (PI / 180))));
 	}
 }
-void move_right(t_data *data)
-{
-	if(data->map->grid[((data->player->y) / SQUARE)][((data->player->x  + 20)/SQUARE)] != '1')
-		data->player->x= data->player->x + 5;
-}
+
 void move_left(t_data *data)
 {
-	if(data->map->grid[(int)round(data->player->y)/SQUARE][(int)round((data->player->x - 5) /SQUARE)] != '1')
-		data->player->x = data->player->x - 5;
+	if(data->player->angle == 360)
+		data->player->angle = 0;
+	data->player->angle += R_SPEED;
 }
+void move_right(t_data *data)
+{
+	if(data->player->angle == 0)
+		data->player->angle = 360;
+	data->player->angle -= R_SPEED;
+}
+
+
 
 int	handle_keypress(int keysym, t_data *data)
 {
@@ -69,6 +74,8 @@ int	handle_keypress(int keysym, t_data *data)
 		move_right(data);
 	else if(keysym == 0)
 		move_left(data);
+	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	draw_background(data);
 	render_map(data);
 	draw_player(data->player->x ,data->player->y, data);
 	raycast(data);
