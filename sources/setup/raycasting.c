@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:04:39 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/09 05:00:13 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/14 02:44:29 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,8 @@ float wall_length(t_data *data, float ray_length, float ray_angle)
 	ray_length = ray_length * cos((ray_angle - data->player->angle)* (PI / 180));
 	ppd = (WIDTH / 2 ) / tan(30 * (PI / 180));
 	wall_length = ceil((SQUARE / ray_length) * ppd);
-	printf("These are the wall_lengths -> %f\n", wall_length);
 	if(wall_length > HEIGHT)
 		wall_length = HEIGHT - 2;
-	// printf("%f wall length = \n",wall_length);
-	// printf("%f ray length = \n",ray_length);
 	return(wall_length);
 }
 void draw_wall(t_data *data,float wall_length,int rays_count, int flag)
@@ -125,7 +122,6 @@ void draw_wall(t_data *data,float wall_length,int rays_count, int flag)
 		count++;
 	}
 }
-
 
 void draw_ray(t_data *data,float ray_angle ,float ray_length)
 {
@@ -153,6 +149,7 @@ void raycast(t_data *data)
 	float ray_length;
 	float ray_angle;
 	int rays_count;
+	float w_length;
 
 
 	ray_angle = data->player->angle + 30;
@@ -167,23 +164,29 @@ void raycast(t_data *data)
 	rays_count = 0;
 	int i;
 	i = 0;
-	printf("-------------------------------------------------------\n");
 	while (rays_count < WIDTH)
 	{
 		if(vertical_distance(ray_angle, data)< horizontal_distance(ray_angle, data))
 		{
+			w_length = wall_length(data, vertical_distance(ray_angle, data), ray_angle);
 			draw_ray(data, ray_angle,vertical_distance(ray_angle, data));
-			draw_wall(data,wall_length(data, vertical_distance(ray_angle, data), ray_angle), rays_count,0);
+			// draw_wall(data,wall_length(data, vertical_distance(ray_angle, data), ray_angle), rays_count,0);
+			draw_image(data,w_length, rays_count,1,ray_angle,vertical_distance(ray_angle, data));
+
 		}
 		else
 		{
+			w_length = wall_length(data, horizontal_distance(ray_angle, data), ray_angle);
 			draw_ray(data, ray_angle,horizontal_distance(ray_angle, data));
-			draw_wall(data,wall_length(data, horizontal_distance(ray_angle, data), ray_angle), rays_count, 1);
+			// draw_wall(data,wall_length(data, horizontal_distance(ray_angle, data), ray_angle), rays_count, 1);
+			draw_image(data,w_length, rays_count,0,ray_angle,horizontal_distance(ray_angle, data));
 		}
 		ray_angle = ray_angle - step_angle;
 		if (roundf(ray_angle) <= 0)
 			ray_angle = 360;
 		rays_count++;
 		i++;
+		// if(i == 10)
+		// 	break;
 	}
 }

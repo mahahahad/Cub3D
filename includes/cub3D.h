@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/08 19:32:44 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/14 00:38:10 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 #include <stdio.h>
 
 # define SQUARE 16
+# define Texture 32
 # define SPEED 5
 # define PI 3.14159265359
 # define WIDTH 1800
@@ -86,6 +87,18 @@ typedef struct s_data
 	t_img		img;
 	t_map		*map;
 	t_textures	*textures;
+	t_img       *north;
+	int			nh;
+	int			nw;
+	t_img       *south;
+	int			sh;
+	int			sw;
+	t_img       *east;
+	int			eh;
+	int			ew;
+	t_img       *west;
+	int			wh;
+	int			ww;
 	t_player	*player;
 	float		hx;
 	float		hy;
@@ -148,6 +161,10 @@ int		is_map_valid(t_data *data);
 int		process_map(t_data *data);
 int		is_surrounded_by_walls(t_data *data);
 void	set_texture_ids(char *texture_ids[7]);
+
+// textures
+void  save_images(t_data *data);
+void draw_image(t_data *data,float wall_length,int rays_count, int flag, float ray_angle, float ray_length);
 
 // Cleanup
 void	free_textures(t_textures *textures);

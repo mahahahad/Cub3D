@@ -6,20 +6,35 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:01:22 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/09 01:49:02 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/14 04:22:09 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	my_pixel_put(t_img *img, int x, int y, int color)
+// void	my_pixel_put(t_img *img, int x, int y, int color)
+// {
+// 	int	offset;
+
+// 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
+// 	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
+
+// 	*((unsigned int *)(offset + img->img_pixels_ptr)) = color;
+// }
+
+void my_pixel_put(t_img *img, int x, int y, int color)
 {
-	int	offset;
+    int offset;
+    unsigned int *pixel_ptr;
 
-	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
-	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
+    // Compute the byte offset for the pixel
+    offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
 
-	*((unsigned int *)(offset + img->img_pixels_ptr)) = color;
+    // Calculate the pixel address and cast it to unsigned int *
+    pixel_ptr = (unsigned int *)(img->img_pixels_ptr + offset);
+
+    // Set the color value at the computed address
+    *pixel_ptr = color;
 }
 
 void  draw_square(int i, int j,t_data *data, int col)
