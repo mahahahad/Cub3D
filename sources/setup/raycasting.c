@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:04:39 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/14 02:44:29 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/15 10:50:49 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ float horizontal_distance(float ray_angle, t_data *data)
 			x += x_new;
         y += y_new;
 	}
-    data->hx = x;
+    data->hx = x ;
     data->hy = y;
     length = sqrt((data->player->x - x) * (data->player->x - x) + (data->player->y - y) * (data->player->y - y));
     return(length);
@@ -89,14 +89,14 @@ float vertical_distance(float ray_angle, t_data *data)
 	return(length);
 }
 
-float wall_length(t_data *data, float ray_length, float ray_angle)
+int wall_length(t_data *data, float ray_length, float ray_angle)
 {
 	float ppd;
 	float wall_length;
 
 	ray_length = ray_length * cos((ray_angle - data->player->angle)* (PI / 180));
 	ppd = (WIDTH / 2 ) / tan(30 * (PI / 180));
-	wall_length = ceil((SQUARE / ray_length) * ppd);
+	wall_length = (SQUARE / ray_length) * ppd;
 	if(wall_length > HEIGHT)
 		wall_length = HEIGHT - 2;
 	return(wall_length);
@@ -160,7 +160,7 @@ void raycast(t_data *data)
         ray_angle -= 2 * 180;
     }
 	ray_length = 0;
-	step_angle = 60 /(float) WIDTH;
+	step_angle = (float)60 /(float) WIDTH;
 	rays_count = 0;
 	int i;
 	i = 0;
@@ -169,7 +169,7 @@ void raycast(t_data *data)
 		if(vertical_distance(ray_angle, data)< horizontal_distance(ray_angle, data))
 		{
 			w_length = wall_length(data, vertical_distance(ray_angle, data), ray_angle);
-			draw_ray(data, ray_angle,vertical_distance(ray_angle, data));
+			// draw_ray(data, ray_angle,vertical_distance(ray_angle, data));
 			// draw_wall(data,wall_length(data, vertical_distance(ray_angle, data), ray_angle), rays_count,0);
 			draw_image(data,w_length, rays_count,1,ray_angle,vertical_distance(ray_angle, data));
 
@@ -177,7 +177,7 @@ void raycast(t_data *data)
 		else
 		{
 			w_length = wall_length(data, horizontal_distance(ray_angle, data), ray_angle);
-			draw_ray(data, ray_angle,horizontal_distance(ray_angle, data));
+			// draw_ray(data, ray_angle,horizontal_distance(ray_angle, data));
 			// draw_wall(data,wall_length(data, horizontal_distance(ray_angle, data), ray_angle), rays_count, 1);
 			draw_image(data,w_length, rays_count,0,ray_angle,horizontal_distance(ray_angle, data));
 		}

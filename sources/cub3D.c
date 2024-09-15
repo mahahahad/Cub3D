@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/14 05:25:18 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/15 07:04:57 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ void set_player_pixs(t_data *data)
 
 int	main(int argc, char **argv)
 {
-	argc=0;
-	argv = 0;
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
@@ -81,10 +79,10 @@ int	main(int argc, char **argv)
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "cub3D");
 	data->img.img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
-	data->img.img_pixels_ptr =  mlx_get_data_addr(data->img.img,
+	data->img.img_pixels_ptr = (int *) (mlx_get_data_addr(data->img.img,
 												&(data->img.bits_per_pixel),
 												&(data->img.line_len),
-												&(data->img.endian));
+												&(data->img.endian)));
 	if (data->img.img == NULL)
 	{
 		printf("error : img ptr\n");
@@ -96,8 +94,8 @@ int	main(int argc, char **argv)
 	render_map(data);
 	draw_player(data->player->x, data->player->y , data);
 	save_images(data);
-	if (!data->south || !data->north)
-		return(1);
+	// if (!data->south || !data->north)
+	// 	return(1);
 	raycast(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
 	printf("im here after raycasting its not seg faulting anymore\n");

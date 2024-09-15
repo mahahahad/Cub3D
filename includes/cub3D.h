@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/14 00:38:10 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/15 09:11:19 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define Texture 32
 # define SPEED 5
 # define PI 3.14159265359
-# define WIDTH 1800
-# define HEIGHT 1200
+# define WIDTH 1024
+# define HEIGHT 512
 # define R_SPEED 1
 
 /* *************** *
@@ -74,7 +74,7 @@ typedef struct s_coords
 
 typedef struct s_img {
 	void	*img;
-	char	*img_pixels_ptr;
+	int		*img_pixels_ptr;
 	int		bits_per_pixel;
 	int		line_len;
 	int		endian;
@@ -87,16 +87,16 @@ typedef struct s_data
 	t_img		img;
 	t_map		*map;
 	t_textures	*textures;
-	t_img       *north;
+	t_img       north;
 	int			nh;
 	int			nw;
-	t_img       *south;
+	t_img       south;
 	int			sh;
 	int			sw;
-	t_img       *east;
+	t_img       east;
 	int			eh;
 	int			ew;
-	t_img       *west;
+	t_img       west;
 	int			wh;
 	int			ww;
 	t_player	*player;
@@ -164,7 +164,7 @@ void	set_texture_ids(char *texture_ids[7]);
 
 // textures
 void  save_images(t_data *data);
-void draw_image(t_data *data,float wall_length,int rays_count, int flag, float ray_angle, float ray_length);
+void draw_image(t_data *data,int wall_length,int rays_count, int flag, float ray_angle, float ray_length);
 
 // Cleanup
 void	free_textures(t_textures *textures);
