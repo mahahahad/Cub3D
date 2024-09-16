@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/09 02:27:39 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/16 21:43:43 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int	handle_keypress(int keysym, t_data *data)
 		move_left(data);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	draw_background(data);
-	render_map(data);
-	draw_player(data->player->x ,data->player->y, data);
+	// render_map(data);
+	// draw_player(data->player->x ,data->player->y, data);
 	raycast(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
 	return (0);

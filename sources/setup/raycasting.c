@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:04:39 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/15 10:50:49 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/16 20:47:06 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,16 +169,12 @@ void raycast(t_data *data)
 		if(vertical_distance(ray_angle, data)< horizontal_distance(ray_angle, data))
 		{
 			w_length = wall_length(data, vertical_distance(ray_angle, data), ray_angle);
-			// draw_ray(data, ray_angle,vertical_distance(ray_angle, data));
-			// draw_wall(data,wall_length(data, vertical_distance(ray_angle, data), ray_angle), rays_count,0);
 			draw_image(data,w_length, rays_count,1,ray_angle,vertical_distance(ray_angle, data));
 
 		}
 		else
 		{
 			w_length = wall_length(data, horizontal_distance(ray_angle, data), ray_angle);
-			// draw_ray(data, ray_angle,horizontal_distance(ray_angle, data));
-			// draw_wall(data,wall_length(data, horizontal_distance(ray_angle, data), ray_angle), rays_count, 1);
 			draw_image(data,w_length, rays_count,0,ray_angle,horizontal_distance(ray_angle, data));
 		}
 		ray_angle = ray_angle - step_angle;
@@ -186,7 +182,5 @@ void raycast(t_data *data)
 			ray_angle = 360;
 		rays_count++;
 		i++;
-		// if(i == 10)
-		// 	break;
 	}
 }

@@ -6,30 +6,30 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:01:22 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/15 06:30:36 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/16 21:12:16 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-// void	my_pixel_put(t_img *img, int x, int y, int color)
-// {
-// 	int	offset;
-
-// 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
-// 	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
-
-// 	img->img_pixels_ptr[offset / 4] = color;
-// }
 
 void	my_pixel_put(t_img *img, int x, int y, int color)
 {
 	int	offset;
 
 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
-	offset = ((img->line_len / 4) * y) + (x);
-	*(offset + img->img_pixels_ptr) = color;
+	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
+
+	img->img_pixels_ptr[offset / 4] = color;
 }
+
+// void	my_pixel_put(t_img *img, int x, int y, int color)
+// {
+// 	int	offset;
+
+// 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
+// 	offset = ((img->line_len / 4) * y) + (x);
+// 	*(offset + img->img_pixels_ptr) = color;
+// }
 
 // void	my_pixel_put(t_img *img, int x, int y, int color)
 // {

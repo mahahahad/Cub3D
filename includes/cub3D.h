@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/15 09:11:19 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/16 21:01:53 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <math.h>
 #include <stdio.h>
 
-# define SQUARE 16
+# define SQUARE 32
 # define Texture 32
 # define SPEED 5
 # define PI 3.14159265359
