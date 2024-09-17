@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/17 21:02:08 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/17 21:08:26 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,7 @@ int	handle_keypress(int keysym, t_data *data)
 	else if (keysym == KEY_ARROW_RIGHT)
 		data->player->angle -= SPEED;
 	data->player->angle %= 360;
-	// render_map(data);
-	// draw_player(data->player->x ,data->player->y, data);
+	draw_background(data);
 	raycast(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
 	return (0);
