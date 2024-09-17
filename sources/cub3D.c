@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 16:59:37 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/16 21:42:51 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	print_info(t_data data)
 }
 void set_player_pixs(t_data *data)
 {
-	data->player->x = (data->player->x + 0.5) * SQUARE;
-	data->player->y = (data->player->y + 0.5)* SQUARE;
+	data->player->x = (data->player->x * (SQUARE) ) +((SQUARE) / 2) ;
+	data->player->y = (data->player->y* (SQUARE) ) +((SQUARE) / 2) ;
 }
 
 int	main(int argc, char **argv)
@@ -79,10 +79,10 @@ int	main(int argc, char **argv)
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "cub3D");
 	data->img.img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
-	data->img.img_pixels_ptr= mlx_get_data_addr(data->img.img,
+	data->img.img_pixels_ptr = (int *) (mlx_get_data_addr(data->img.img,
 												&(data->img.bits_per_pixel),
 												&(data->img.line_len),
-												&(data->img.endian));
+												&(data->img.endian)));
 	if (data->img.img == NULL)
 	{
 		printf("error : img ptr\n");
@@ -90,13 +90,18 @@ int	main(int argc, char **argv)
 	}
 	printf("hello\n");
 	set_player_pixs(data);
-	render_map(data);
-	draw_player(data->player->x, data->player->y , data);
+	draw_background(data);
+	// render_map(data);
+	// draw_player(data->player->x, data->player->y , data);
+	save_images(data);
+	// if (!data->south || !data->north)
+	// 	return(1);
 	raycast(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
 	printf("im here after raycasting its not seg faulting anymore\n");
 	mlx_hook(data->win_ptr, 17, 1L << 2, handle_destroy, data);
 	mlx_hook(data->win_ptr, 2, 1L << 0, handle_keypress, data);
+	// mlx_key_release_hook(data->win_ptr, handle_keypress, data);
 	mlx_loop(data->mlx_ptr);
 	return (EXIT_SUCCESS);
 }

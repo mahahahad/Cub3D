@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/08 22:56:10 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/17 21:02:08 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void move_up(t_data *data)
 		(SPEED * sin(data->player->angle * (PI / 180))));
 	new_x = (int) round(data->player->x + \
 		(SPEED * cos(data->player->angle * (PI / 180))));
-	printf("Angle: %d,\nX: %d,\nY: %d\n", data->player->angle, data->player->x, data->player->y);
 	if(data->map->grid[new_y / SQUARE][new_x / SQUARE] != '1')
 	{
 		data->player->y = new_y;
@@ -54,8 +53,8 @@ void move_down(t_data *data)
 		(SPEED * cos(data->player->angle * (PI / 180))));
 	if(data->map->grid[new_y / SQUARE][new_x / SQUARE] != '1')
 	{
-		data->player->y = new_y;
-		data->player->x = new_x;
+		data->player->y =(int)round (data->player->y + (SPEED * sin(data->player->angle  * (PI / 180))));
+		data->player->x = (int)round (data->player->x - (SPEED * cos(data->player->angle  * (PI / 180))));
 	}
 }
 void move_right(t_data *data)
@@ -106,8 +105,8 @@ int	handle_keypress(int keysym, t_data *data)
 	else if (keysym == KEY_ARROW_RIGHT)
 		data->player->angle -= SPEED;
 	data->player->angle %= 360;
-	render_map(data);
-	draw_player(data->player->x ,data->player->y, data);
+	// render_map(data);
+	// draw_player(data->player->x ,data->player->y, data);
 	raycast(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/07 20:41:02 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/17 20:59:29 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@
 # include <math.h>
 #include <stdio.h>
 
-# define SQUARE 30
+# define SQUARE 32
+# define Texture 32
 # define SPEED 5
 # define PI 3.14159265359
-# define WIDTH 1800
-# define HEIGHT 1200
+# define WIDTH 1024
+# define HEIGHT 512
+# define R_SPEED 1
 
 /* *************** *
  * DATA STRUCTURES *
@@ -60,8 +62,8 @@ typedef struct s_player
 {
 	char	direction;
 	int		angle;
-	int		x;
-	int		y;
+	float		x;
+	float		y;
 }	t_player;
 
 typedef struct s_coords
@@ -72,7 +74,7 @@ typedef struct s_coords
 
 typedef struct s_img {
 	void	*img;
-	char	*img_pixels_ptr;
+	int		*img_pixels_ptr;
 	int		bits_per_pixel;
 	int		line_len;
 	int		endian;
@@ -85,6 +87,18 @@ typedef struct s_data
 	t_img		img;
 	t_map		*map;
 	t_textures	*textures;
+	t_img       north;
+	int			nh;
+	int			nw;
+	t_img       south;
+	int			sh;
+	int			sw;
+	t_img       east;
+	int			eh;
+	int			ew;
+	t_img       west;
+	int			wh;
+	int			ww;
 	t_player	*player;
 	float		hx;
 	float		hy;
@@ -152,6 +166,7 @@ void  draw_square(int i, int j,t_data *data, int col);
 void	my_pixel_put(t_img *img, int x, int y, int color);
 void render_map(t_data *data);
 void draw_player(double i, double j, t_data *data);
+void draw_background(t_data *data);
 // raycasting
 void raycast(t_data *data);
 
@@ -166,6 +181,10 @@ int		is_map_valid(t_data *data);
 int		process_map(t_data *data);
 int		is_surrounded_by_walls(t_data *data);
 void	set_texture_ids(char *texture_ids[7]);
+
+// textures
+void  save_images(t_data *data);
+void draw_image(t_data *data,int wall_length,int rays_count, int flag, float ray_angle, float ray_length);
 
 // Cleanup
 void	free_textures(t_textures *textures);

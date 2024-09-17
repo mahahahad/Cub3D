@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:01:22 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/05 16:52:28 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/16 21:12:16 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,40 @@ void	my_pixel_put(t_img *img, int x, int y, int color)
 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
 	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
 
-	*((unsigned int *)(offset + img->img_pixels_ptr)) = color;
+	img->img_pixels_ptr[offset / 4] = color;
 }
+
+// void	my_pixel_put(t_img *img, int x, int y, int color)
+// {
+// 	int	offset;
+
+// 	//🚨 Line len is in bytes. WIDTH 800 len_line ~3200 (can differ for alignment)
+// 	offset = ((img->line_len / 4) * y) + (x);
+// 	*(offset + img->img_pixels_ptr) = color;
+// }
+
+// void	my_pixel_put(t_img *img, int x, int y, int color)
+// {
+// 	int	offset;
+
+// 	offset = (Texture * y) + x;
+// 	*(offset + img->img_pixels_ptr) = color;
+// }
+
+// void my_pixel_put(t_img *img, int x, int y, int color)
+// {
+//    int offset;
+//     unsigned int pixel_ptr;
+
+//     // Compute the byte offset for the pixel
+//     offset = ((img->line_len * y) + (x * (img->bits_per_pixel / 8)));
+
+//     // Calculate the pixel address and cast it to unsigned int *
+//     pixel_ptr = img->img_pixels_ptr[offset];
+
+//     // Set the color value at the computed address
+//     pixel_ptr = color;
+// }
 
 void  draw_square(int i, int j,t_data *data, int col)
 {
@@ -36,17 +68,14 @@ void  draw_square(int i, int j,t_data *data, int col)
 		i = or_i;
 		while (square_width < SQUARE - 1)
 		{
-			// mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j, col);
 			my_pixel_put(&(data->img),i, j, col);
 			square_width++;
 			i++;
 		}
-		// mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j, 0x000000);
 		my_pixel_put(&(data->img),i, j, 0x000000);
 		j++;
 		square_height++;
 	}
-	// mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j, 0x000000);
 	my_pixel_put(&(data->img),i, j, 0x000000);
 }
 int return_color(char c)
@@ -79,7 +108,6 @@ void draw_player_stick(t_data *data)
 	{
 		while(counter < 20)
 		{
-				// mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
 				my_pixel_put(&(data->img),i , j,0xFF8D85 );
 				j++;
 				counter++;
@@ -89,7 +117,6 @@ void draw_player_stick(t_data *data)
 	{
 		while(counter < 20)
 		{
-				// mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
 				my_pixel_put(&(data->img),i , j,0xFF8D85 );
 				i++;
 				counter++;
@@ -99,7 +126,6 @@ void draw_player_stick(t_data *data)
 	{
 		while(counter < 20)
 		{
-				// mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
 				my_pixel_put(&(data->img),i , j,0xFF8D85 );
 				i--;
 				counter++;
@@ -111,7 +137,6 @@ void draw_player_stick(t_data *data)
 		j =j + (sin(data->player->angle *(PI / 180)));
 		while(counter < 20)
 		{
-			// mlx_pixel_put(data->mlx_ptr, data->win_ptr,i , j,0xFF8D85 );
 			my_pixel_put(&(data->img),i , j,0xFF8D85 );
 			i++;
 			j--;
@@ -119,31 +144,34 @@ void draw_player_stick(t_data *data)
 		}
 	}
 }
+void draw_background(t_data *data)
+{
+	int i;
+	int j;
+	 i = 0;
+	 j = 0;
 
-// void draw_player(double i, double j, t_data *data)
-// {
-// 	int square_width;
-// 	int square_height;
-// 	int or_i;
-// 	square_width = 0;
-// 	square_height = 0;
-
-// 	or_i = i;
-// 	while (square_height < 10)
-// 	{
-// 		square_width= 0;
-// 		i = or_i;
-// 		while (square_width < 10)
-// 		{
-// 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, i, j,0xFF8D85 );
-// 			square_width++;
-// 			i++;
-// 		}
-// 		j++;
-// 		square_height++;
-// 	}
-// // 	draw_player_stick(data);
-// }
+	while (j < (HEIGHT / 2))
+	{
+		i =0;
+		while (i < WIDTH)
+		{
+			my_pixel_put(&(data->img), i, j , 0x56B4E9);
+			i++;
+		}
+		j++;
+	}
+	while (j < HEIGHT)
+	{
+		i = 0;
+		while (i < WIDTH)
+		{
+			my_pixel_put(&(data->img), i, j , 0x996600);
+			i++;
+		}
+		j++;
+	}
+}
 
 void draw_player(double i, double j, t_data *data)
 {
@@ -191,13 +219,13 @@ void render_map(t_data *data)
 			if(data->map->grid[j][i] != ' ')
 			{
 				col = return_color(data->map->grid[j][i]);
-				// raycast(data);
 				draw_square(i * SQUARE, j* SQUARE, data, col);
 			}
 			i++;
 		}
 		j++;
 	}
+	// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
 }
 
 
