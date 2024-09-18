@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:37:11 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/05 13:22:38 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/18 23:00:12 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	has_required_config(t_data *data)
 		return (ft_err("No west texture detected"));
 	else if (!data->textures->south)
 		return (ft_err("No south texture detected"));
-	else if (!data->textures->floor)
-		return (ft_err("No floor texture detected"));
-	else if (!data->textures->ceiling)
-		return (ft_err("No ceiling texture detected"));
+	else if (!data->textures->floor || !data->textures->floor[0])
+		return (ft_err("No floor colour detected"));
+	else if (!data->textures->ceiling || !data->textures->ceiling[0])
+		return (ft_err("No ceiling colour detected"));
 	else if (!data->map->full)
 		return (ft_err("No map found"));
 	else if (has_invalid_chars(data, data->player) == EXIT_FAILURE)

@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 23:26:14 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/21 23:26:51 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/18 22:56:23 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,24 @@ bool	is_set(t_data *data, t_texture_type type)
 		return (ft_err("Duplicate west texture detected."));
 	if (type == SOUTH && data->textures->south)
 		return (ft_err("Duplicate south texture detected."));
-	if (type == FLOOR && data->textures->floor)
+	if (type == FLOOR && data->textures->floor[0])
 		return (ft_err("Duplicate floor texture detected."));
-	if (type == CEILING && data->textures->ceiling)
+	if (type == CEILING && data->textures->ceiling[0])
 		return (ft_err("Duplicate ceiling texture detected."));
+	return (EXIT_SUCCESS);
+}
+
+int	set_rgb_values(int texture_channels[3], char *line)
+{
+	char	**str_color_values;
+
+	str_color_values = ft_split(line, ',');
+	if (ft_tablen(str_color_values) != 3)
+		return (ft_err("Incorrect colour format provided."));
+	texture_channels[0] = ft_atoi(str_color_values[0]);
+	texture_channels[1] = ft_atoi(str_color_values[1]);
+	texture_channels[2] = ft_atoi(str_color_values[2]);
+	ft_freetab(str_color_values);
 	return (EXIT_SUCCESS);
 }
 
@@ -64,8 +78,14 @@ int	assign_texture(t_texture_type type, char *texture, t_data *data)
 	else if (type == SOUTH)
 		data->textures->south = ft_strtrim(texture, WHITESPACE);
 	else if (type == FLOOR)
-		data->textures->floor = ft_strtrim(texture, WHITESPACE);
+	{
+		if (set_rgb_values(data->textures->floor, texture) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
 	else if (type == CEILING)
-		data->textures->ceiling = ft_strtrim(texture, WHITESPACE);
+	{
+		if (set_rgb_values(data->textures->ceiling, texture) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

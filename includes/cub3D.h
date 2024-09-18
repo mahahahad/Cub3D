@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/17 20:59:29 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/18 22:26:43 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 
 # define SQUARE 32
 # define Texture 32
-# define SPEED 5
+# define SPEED 0.005
+# define SENSITIVITY 0.005
 # define PI 3.14159265359
 # define WIDTH 1024
 # define HEIGHT 512
@@ -52,25 +53,25 @@ typedef struct s_textures
 	char	*east;
 	char	*west;
 	char	*south;
-	char	*floor;
-	char	*ceiling;
+	int		floor[3];
+	int		ceiling[3];
 }	t_textures;
-
-
-
-typedef struct s_player
-{
-	char	direction;
-	int		angle;
-	float		x;
-	float		y;
-}	t_player;
 
 typedef struct s_coords
 {
 	int	x;
 	int	y;
 }	t_coords;
+
+typedef struct s_player
+{
+	char	direction;
+	int		angle;
+	int		angle_multiplier;
+	float		x;
+	float		y;
+	t_coords	velocity;
+}	t_player;
 
 typedef struct s_img {
 	void	*img;
@@ -173,6 +174,7 @@ void raycast(t_data *data);
 // Handlers
 int		handle_destroy(t_data *data);
 int		handle_keypress(int keysym, t_data *data);
+int		handle_keyrelease(int keysym, t_data *data);
 
 // Parsing
 int		append_map_content(t_data *data, char *processed_line, char *line);
@@ -183,8 +185,9 @@ int		is_surrounded_by_walls(t_data *data);
 void	set_texture_ids(char *texture_ids[7]);
 
 // textures
-void  save_images(t_data *data);
-void draw_image(t_data *data,int wall_length,int rays_count, int flag, float ray_angle, float ray_length);
+void	save_images(t_data *data);
+void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
+	float ray_angle);
 
 // Cleanup
 void	free_textures(t_textures *textures);

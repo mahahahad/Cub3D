@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 22:43:01 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/13 23:28:36 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/18 22:46:40 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void	init_map(t_map *map)
 	map->grid = NULL;
 }
 
-void init_angle(t_data *data)
+void	init_angle(t_data *data)
 {
-	if(data ->player->direction == 'N')
+	if (data->player->direction == 'N')
 		data->player->angle = 90;
-	else if(data->player->direction == 'S')
+	else if (data->player->direction == 'S')
 		data->player->angle = 270;
-	else if(data->player->direction == 'E')
+	else if (data->player->direction == 'E')
 		data->player->angle = 0;
-	else if(data->player->direction == 'W')
+	else if (data->player->direction == 'W')
 		data->player->angle = 180;
 }
 
@@ -38,16 +38,23 @@ void	init_textures(t_textures *textures)
 	textures->east = NULL;
 	textures->west = NULL;
 	textures->south = NULL;
-	textures->floor = NULL;
-	textures->ceiling = NULL;
+	textures->floor[0] = 0;
+	textures->floor[1] = 0;
+	textures->floor[2] = 0;
+	textures->ceiling[0] = 0;
+	textures->ceiling[1] = 0;
+	textures->ceiling[2] = 0;
 }
 
 void	init_player(t_player *player)
 {
 	player->direction = '\0';
-	player ->angle = '\0';
-	player->x = '\0';
-	player->y = '\0';
+	player->angle = 0;
+	player->angle_multiplier = 0;
+	player->x = 0;
+	player->y = 0;
+	player->velocity.x = 0;
+	player->velocity.y = 0;
 }
 
 /**
@@ -65,7 +72,7 @@ void	init_data(t_data *data)
 	init_textures(data->textures);
 	data->mlx_ptr = NULL;
 	data->win_ptr = NULL;
-	data->hx =0;
+	data->hx = 0;
 	data->hy = 0;
 	data->vx = 0;
 	data->vy = 0;

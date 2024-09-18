@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 23:40:02 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/21 23:53:20 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/18 21:50:34 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,3 @@ int	is_surrounded_by_walls(t_data *data)
 	ft_freetab(visited);
 	return (EXIT_SUCCESS);
 }
-

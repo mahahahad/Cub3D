@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 18:20:49 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/21 23:49:27 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/18 22:55:46 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #  define WHITESPACE " \t\n\v\r"
 # endif
 
+int		ft_atoi(const char *str);
 int		ft_err(char *msg);
 void	ft_freetab(char **arr);
 void	ft_puttab(char **arr);
@@ -41,5 +42,6 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_tabdup(char **tab, char fill_char);
 char	**ft_tabjoin(char **tab, char *str);
+int		ft_tablen(char **tab);
 
 #endif
