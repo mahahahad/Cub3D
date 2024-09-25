@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:18:16 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/18 21:56:46 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:58:29 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 // {
 // }
 
-void	save_images(t_data *data)
+int	save_images(t_data *data)
 {
 	data->nh = 0;
 	data->nw = 0;
@@ -52,6 +52,7 @@ void	save_images(t_data *data)
 	data->west.img_pixels_ptr = (int *) mlx_get_data_addr(data->west.img, \
 		&(data->west.bits_per_pixel), &(data->west.line_len), \
 		&(data->west.endian));
+	return (EXIT_SUCCESS);
 }
 
 t_img	get_image(t_data *data, float ray_angle, int flag)
@@ -74,13 +75,13 @@ float	get_x(t_data *data, int flag, float ray_angle)
 
 	if (flag == 0)
 	{
-		x_text = (int) data->hx % Texture ;
+		x_text = (int) data->hx % TEXTURE ;
 		if (ray_angle > 180)
 			x_text = 31 - x_text;
 	}
 	if (flag == 1)
 	{
-		x_text = (int) data->vy % Texture;
+		x_text = (int) data->vy % TEXTURE;
 		if (ray_angle > 90 && ray_angle < 270)
 			x_text = 31 - x_text;
 	}
@@ -113,7 +114,7 @@ void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
 	int		ty_off;
 
 	ty_off = 0;
-	step = (1.0 * Texture) / wall_length;
+	step = (1.0 * TEXTURE) / wall_length;
 	if ((int) wall_length > HEIGHT)
 	{
 		ty_off = ((int) wall_length - HEIGHT) / 2.0;

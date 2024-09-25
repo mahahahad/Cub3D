@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/18 19:49:34 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:03:31 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	handle_keypress(int keysym, t_data *data)
 {
 	if (keysym == KEY_ESC)
 		return (handle_destroy(data));
-	if (keysym == KEY_W)
+	else if (keysym == KEY_W)
 		data->player->velocity.y--;
 	else if (keysym == KEY_S)
 		data->player->velocity.y++;

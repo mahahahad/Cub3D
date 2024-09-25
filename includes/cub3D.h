@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/18 22:26:43 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/25 22:22:15 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #include <stdio.h>
 
 # define SQUARE 32
-# define Texture 32
+# define TEXTURE 64
 # define SPEED 0.005
 # define SENSITIVITY 0.005
 # define PI 3.14159265359
@@ -185,7 +185,7 @@ int		is_surrounded_by_walls(t_data *data);
 void	set_texture_ids(char *texture_ids[7]);
 
 // textures
-void	save_images(t_data *data);
+int	save_images(t_data *data);
 void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
 	float ray_angle);
 

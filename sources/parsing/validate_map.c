@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:37:11 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/18 23:00:12 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/25 21:07:08 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,19 @@ int	has_invalid_chars(t_data *data, t_player *player)
 	return (EXIT_SUCCESS);
 }
 
+int	are_textures_valid(t_data *data)
+{
+	if (open(data->textures->north, O_RDONLY) < 0)
+		return (ft_err("North texture could not be opened."));
+	else if (open(data->textures->east, O_RDONLY) < 0)
+		return (ft_err("East texture could not be opened."));
+	else if (open(data->textures->west, O_RDONLY) < 0)
+		return (ft_err("West texture could not be opened."));
+	else if (open(data->textures->south, O_RDONLY) < 0)
+		return (ft_err("South texture could not be opened."));
+	return (EXIT_SUCCESS);
+}
+
 int	has_required_config(t_data *data)
 {
 	if (!data->textures->north)
@@ -57,6 +70,8 @@ int	has_required_config(t_data *data)
 		return (ft_err("No west texture detected"));
 	else if (!data->textures->south)
 		return (ft_err("No south texture detected"));
+	else if (are_textures_valid(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	else if (!data->textures->floor || !data->textures->floor[0])
 		return (ft_err("No floor colour detected"));
 	else if (!data->textures->ceiling || !data->textures->ceiling[0])

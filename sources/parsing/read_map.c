@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:05:12 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/21 23:26:47 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/25 22:01:33 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,16 @@ int	set_game_data(char *line, t_data *data)
 	int		i;
 	char	*processed_line;
 	char	*t_ids[7];
-
+	bool	found;
+	
+	i = -1;
+	found = false;
 	set_texture_ids(t_ids);
 	processed_line = ft_strtrim(line, WHITESPACE);
-	if (processed_line[0] == '1')
+	if (!processed_line[0] && data->map->full)
+		return (free(processed_line), ft_err("Empty line found in map"));
+	if (processed_line[0] == '1' || processed_line[0] == '0')
 		return (append_map_content(data, processed_line, line));
-	i = -1;
 	while (t_ids[++i])
 	{
 		if (!ft_strncmp(processed_line, t_ids[i], ft_strlen(t_ids[i])))
@@ -48,9 +52,12 @@ int	set_game_data(char *line, t_data *data)
 				data) == EXIT_FAILURE)
 				return (free_textures(data->textures), \
 					free(processed_line), EXIT_FAILURE);
+			found = true;
 			break ;
 		}
 	}
+	if (processed_line[0] != '\0' && !found)
+		return (free(processed_line), ft_err("Invalid character detected."));
 	return (free(processed_line), EXIT_SUCCESS);
 }
 

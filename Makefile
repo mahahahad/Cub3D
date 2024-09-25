@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS := -Wall -Werror -Wextra -g3
 NAME := cub3D
 INCLUDES := -Iincludes
 
