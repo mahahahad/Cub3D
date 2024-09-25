@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:04:39 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/18 21:49:37 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/25 23:08:18 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,12 +99,11 @@ int	wall_length(t_data *data, float ray_length, float ray_angle)
 	float	ppd;
 	float	wall_length;
 
-	ray_length = ray_length * cos((ray_angle - data->player->angle) \
-		* (PI / 180));
+	ray_length *= cos((ray_angle - data->player->angle) * (PI / 180));
 	ppd = (WIDTH / 2) / tan(30 * (PI / 180));
 	wall_length = (SQUARE / ray_length) * ppd;
-	if (wall_length > HEIGHT)
-		wall_length = HEIGHT - 2;
+	// if (wall_length > HEIGHT)
+	// 	wall_length = HEIGHT - 2;
 	return (wall_length);
 }
 
@@ -158,31 +157,32 @@ void	raycast(t_data *data)
 	int		rays_count;
 	float	w_length;
 	int		i;
+	float	ver_dist;
+	float	hor_dist;
 
 	ray_angle = data->player->angle + 30;
 	if (ray_angle < 0)
-		ray_angle += 2 * 180;
-	if (ray_angle >= (2 * 180))
-		ray_angle -= 2 * 180;
+		ray_angle += 360;
+	if (ray_angle >= 360)
+		ray_angle -= 360;
 	step_angle = (float) 60 / (float) WIDTH;
 	rays_count = 0;
 	i = 0;
 	while (rays_count < WIDTH)
 	{
-		if (vertical_distance(ray_angle, data) < \
-			horizontal_distance(ray_angle, data))
+		ver_dist = vertical_distance(ray_angle, data);
+		hor_dist = horizontal_distance(ray_angle, data);
+		if (ver_dist < hor_dist)
 		{
-			w_length = wall_length(data, \
-				vertical_distance(ray_angle, data), ray_angle);
+			w_length = wall_length(data, ver_dist, ray_angle);
 			draw_image(data, w_length, rays_count, 1, ray_angle);
 		}
 		else
 		{
-			w_length = wall_length(data, \
-				horizontal_distance(ray_angle, data), ray_angle);
+			w_length = wall_length(data, hor_dist, ray_angle);
 			draw_image(data, w_length, rays_count, 0, ray_angle);
 		}
-		ray_angle = ray_angle - step_angle;
+		ray_angle -= step_angle;
 		if (roundf(ray_angle) <= 0)
 			ray_angle = 360;
 		rays_count++;

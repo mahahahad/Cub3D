@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:18:16 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/25 20:58:29 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/25 23:24:40 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@
 // image is contain of bits and each group is a single pixel
 // so the issue is i have to find the row first and then the bits that made up 
 // the pixel
-// void get_color_x(t_data *data,float x, float y)
-// {
-// }
 
 int	save_images(t_data *data)
 {
@@ -76,15 +73,16 @@ float	get_x(t_data *data, int flag, float ray_angle)
 	if (flag == 0)
 	{
 		x_text = (int) data->hx % TEXTURE ;
-		if (ray_angle > 180)
-			x_text = 31 - x_text;
+		// if (ray_angle > 180)
+		// 	x_text = 31 - x_text;
 	}
 	if (flag == 1)
 	{
 		x_text = (int) data->vy % TEXTURE;
-		if (ray_angle > 90 && ray_angle < 270)
-			x_text = 31 - x_text;
+		// if (ray_angle > 90 && ray_angle < 270)
+		// 	x_text = 31 - x_text;
 	}
+	(void) ray_angle;
 	return (x_text);
 }
 
