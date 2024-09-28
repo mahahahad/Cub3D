@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:04:39 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/27 17:46:10 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/28 16:34:34 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,13 @@ float	horizontal_distance(float ray_angle, t_data *data)
 	float	y;
 	float	x_new;
 	float	y_new;
-	float	length;
 
-	x_new = 0;
-	y_new = 0;
 	if (ray_angle > 180)
 		y = floor(data->player->y / SQUARE) * (SQUARE) + SQUARE;
 	else
 		y = floor(data->player->y / SQUARE) * (SQUARE) - 0.0001;
 	x = data->player->x + (data->player->y - y) / tan(ray_angle * (PI / 180));
-	while ((y / SQUARE) >= 0 && (y / SQUARE) < data->map->rows \
-		&& (x / SQUARE) >= 0 && (x / SQUARE) \
-			< (int) ft_strlen(data->map->grid[(int) floor(y / SQUARE)]) \
-		&& data->map->grid[(int) floor(y / SQUARE)][\
-			(int) floor((x / SQUARE))] != '1')
+	while (check_all(data, x, y) == 0)
 	{
 		if (ray_angle > 180)
 			y_new = SQUARE;
@@ -44,11 +37,7 @@ float	horizontal_distance(float ray_angle, t_data *data)
 			x += x_new;
 		y += y_new;
 	}
-	data->hx = x ;
-	data->hy = y;
-	length = sqrt(pow(data->player->x - x, 2) \
-		+ pow(data->player->y - y, 2));
-	return (length);
+	return (data->hx = x, data->hy = y, cal_length(data, x, y));
 }
 
 float	vertical_distance(float ray_angle, t_data *data)
@@ -57,41 +46,27 @@ float	vertical_distance(float ray_angle, t_data *data)
 	float	y;
 	float	x_new;
 	float	y_new;
-	float	length;
 
-	x_new = 0;
-	y_new = 0;
 	if (ray_angle > 90 && ray_angle <= 270)
 		x = floor(data->player->x / SQUARE) * (SQUARE) - 0.0001;
 	else
 		x = floor(data->player->x / SQUARE) * (SQUARE) + SQUARE;
-	y = data->player->y + ((data ->player->x - x) \
-		* tan(ray_angle * (PI / 180)));
-	while ((y / (float) SQUARE) >= 0 \
-		&& (y / (float) SQUARE) < (float) data->map->rows \
-		&& (x / (float) SQUARE) >= 0 \
-		&& (x / (float) SQUARE) \
-			< (int) ft_strlen(data->map->grid[((int)(y / (float) SQUARE))]) \
-		&& data->map->grid[(int)((y / (float) SQUARE))][\
-			(int)(((x / (float) SQUARE)))] != '1')
+	y = data->player->y + (data ->player->x - x) * tan(ray_angle * (PI / 180));
+	while (check_all(data, x, y) == 0)
 	{
 		if (ray_angle > 90 && ray_angle <= 270)
 			x_new = -SQUARE;
 		else
 			x_new = SQUARE;
 		y_new = (float) SQUARE * tan(ray_angle * (PI / 180));
-		if ((ray_angle > 0 && ray_angle < 90) \
+		if ((ray_angle > 0 && ray_angle < 90)
 			|| (ray_angle > 270 && ray_angle <= 360))
 			y -= y_new;
 		else
 			y += y_new;
 		x += x_new;
 	}
-	data->vx = x;
-	data->vy = y;
-	length = sqrt(pow(data->player->x - x, 2) \
-		+ pow(data->player->y - y, 2));
-	return (length);
+	return (data->vx = x, data->vy = y, cal_length(data, x, y));
 }
 
 float	wall_length(t_data *data, float ray_length, float ray_angle)
@@ -102,52 +77,30 @@ float	wall_length(t_data *data, float ray_length, float ray_angle)
 	ray_length *= cos((ray_angle - data->player->angle) * (PI / 180));
 	ppd = (WIDTH / 2) / tan(30 * (PI / 180));
 	wall_length = (SQUARE / ray_length) * ppd;
-	// if (wall_length> HEIGHT)
-	// 	wall_length = HEIGHT;
 	return (wall_length);
 }
 
-void	draw_wall(t_data *data, float wall_length, int rays_count, int flag)
+float	return_wall_length(t_data *data, float ray_angle, int rays_count)
 {
-	float	count;
-	float	x;
-	float	y;
+	float	ver_dist;
+	float	hor_dist;
+	float	w_length;
 
-	count = 0;
-	x = rays_count;
-	y = (HEIGHT / 2) - (wall_length / 2);
-	while (count < wall_length && x < WIDTH && y < HEIGHT && x >= 0 && y >= 0)
+	ver_dist = vertical_distance(ray_angle, data);
+	hor_dist = horizontal_distance(ray_angle, data);
+	if (ver_dist < hor_dist)
 	{
-		if (flag == 0)
-			my_pixel_put(&(data->img), x, y, 0x990000);
-		else
-			my_pixel_put(&(data->img), x, y, 0x99FF99);
-		y++;
-		count++;
+		data->flag = 1;
+		w_length = wall_length(data, ver_dist, ray_angle);
+		draw_image(data, roundf(w_length), rays_count, ray_angle);
 	}
-}
-
-void	draw_ray(t_data *data, float ray_angle, float ray_length)
-{
-	float	i;
-	float	j;
-	float	count;
-
-	count = 0;
-	i = data->player->x;
-	j = data->player->y;
-	while (j > 0 && i > 0 \
-		&& j / (float) SQUARE < data->map->rows \
-		&& i / (float) SQUARE < \
-			(int) ft_strlen(data->map->grid[(int) j / SQUARE]) \
-		&& count <= ray_length)
+	else
 	{
-		my_pixel_put(&(data->img), i, j, 0xFF8D85);
-		i += cos(ray_angle * (PI / 180));
-		j -= sin(ray_angle * (PI / 180));
-		count = sqrt(pow(data->player->x - i, 2) \
-			+ pow(data->player->y - j, 2));
+		data->flag = 0;
+		w_length = wall_length(data, hor_dist, ray_angle);
+		draw_image(data, roundf(w_length), rays_count, ray_angle);
 	}
+	return (w_length);
 }
 
 void	raycast(t_data *data)
@@ -157,8 +110,6 @@ void	raycast(t_data *data)
 	int		rays_count;
 	float	w_length;
 	int		i;
-	float	ver_dist;
-	float	hor_dist;
 
 	ray_angle = data->player->angle + 30;
 	if (ray_angle < 0)
@@ -170,18 +121,7 @@ void	raycast(t_data *data)
 	i = 0;
 	while (rays_count < WIDTH)
 	{
-		ver_dist = vertical_distance(ray_angle, data);
-		hor_dist = horizontal_distance(ray_angle, data);
-		if (ver_dist < hor_dist)
-		{
-			w_length = wall_length(data, ver_dist, ray_angle);
-			draw_image(data, roundf(w_length), rays_count, 1, ray_angle);
-		}
-		else
-		{
-			w_length = wall_length(data, hor_dist, ray_angle);
-			draw_image(data, roundf(w_length), rays_count, 0, ray_angle);
-		}
+		w_length = return_wall_length(data, ray_angle, rays_count);
 		ray_angle -= step_angle;
 		if (roundf(ray_angle) <= 0)
 			ray_angle = 360;

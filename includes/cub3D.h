@@ -6,7 +6,7 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 13:48:42 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/28 16:36:59 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_data
 	float		hy;
 	float		vx;
 	float		vy;
+	int			flag;
 }	t_data;
 
 typedef enum e_texture_types
@@ -170,6 +171,8 @@ void draw_player(double i, double j, t_data *data);
 void draw_background(t_data *data);
 // raycasting
 void raycast(t_data *data);
+float	cal_length(t_data *data, float x, float y);
+int	check_all(t_data *data, float x, float y);
 
 // Handlers
 int		handle_destroy(t_data *data);
@@ -186,7 +189,7 @@ void	set_texture_ids(char *texture_ids[7]);
 
 // textures
 int	save_images(t_data *data);
-void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
+void	draw_image(t_data *data, int wall_length, int rays_count, \
 	float ray_angle);
 	int	rgb_to_hex(int rgb[3]);
 

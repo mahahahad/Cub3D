@@ -6,18 +6,11 @@
 /*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:18:16 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/28 13:49:13 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/28 16:50:20 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-// x and y are the coordinates in the wall i have to find the corresponding
-//  x and y pixel in the texture but as we know in the texture the image is not
-// have the same format as the wall so we have to find the offset i mean the
-// image is contain of bits and each group is a single pixel
-// so the issue is i have to find the row first and then the bits that made up
-// the pixel
 
 int	save_images(t_data *data)
 {
@@ -66,121 +59,77 @@ t_img	get_image(t_data *data, float ray_angle, int flag)
 	return (data->west);
 }
 
-float	get_x(t_data *data, int flag, float ray_angle)
+float	get_x(t_data *data, float ray_angle)
 {
 	float	x_text;
 
-	if (flag == 0)
+	if (data->flag == 0)
 	{
 		x_text = (int) data->hx % TEXTURE ;
-		// if (ray_angle > 180)
-		// 	x_text = 31 - x_text;
+		if (ray_angle > 180)
+			x_text = 31 - x_text;
 	}
-	if (flag == 1)
+	if (data->flag == 1)
 	{
 		x_text = (int) data->vy % TEXTURE;
-		// if (ray_angle > 90 && ray_angle < 270)
-		// 	x_text = 31 - x_text;
+		if (ray_angle > 90 && ray_angle < 270)
+			x_text = 31 - x_text;
 	}
-	(void) ray_angle;
 	return (x_text);
 }
 
-int	get_color(t_data *data, int x, int y, float ray_angle, int flag)
+int	get_color(t_data *data, int x, int y, float ray_angle)
 {
 	t_img	image;
 	int		*image_in_pixs;
 	int		color;
 	int		offset;
-	// if (y < 0 || y >= TEXTURE || x < 0 || x >= TEXTURE)
-	// 	return(0) ;
 
-	image = get_image(data, ray_angle, flag);
+	image = get_image(data, ray_angle, data->flag);
 	offset = (y * (image.line_len / 4) + x);
 	image_in_pixs = image.img_pixels_ptr;
 	color = *(image_in_pixs + offset);
 	return (color);
 }
 
-// void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
-// 	float ray_angle)
-// {
-// 	int		count;
-// 	int		x;
-// 	int		y;
-// 	float	step;
-// 	float	y_text;
-// 	float	x_text;
-// 	int		ty_off;
+int	calc_offset(int *wall_length)
+{
+	int		ty_off;
 
-// 	ty_off = 0;
-// 	step = (1.0 * TEXTURE) / (wall_length);
-// 	if ( wall_length > HEIGHT)
-// 	{
-// 		ty_off = ( wall_length - HEIGHT)/2.0 ;
-// 		wall_length = HEIGHT;
-// 	}
-// 	count = 0;
-// 	x = rays_count;
-// 	y = (HEIGHT / 2) - ( wall_length / 2);
-// 	y_text = ty_off * step;
-// 	while (count <=  wall_length  && x >= 0
-// 		&& y >= 0)
-// 	{
-// 		x_text = get_x(data, flag, ray_angle);
-// 		my_pixel_put(&(data->img), x, y, get_color(data, (int) x_text, \
-// 			(int) y_text, ray_angle, flag));
-// 		y_text += step;
-// 		y++;
-// 		count++;
-// 	}
-// }
-void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
-	float ray_angle)
+	ty_off = 0;
+	if ((int)(*wall_length) > HEIGHT)
+	{
+		ty_off = ((int)(*wall_length) - HEIGHT) / 2.0;
+		*wall_length = HEIGHT;
+	}
+	return (ty_off);
+}
+
+void	draw_image(t_data *data, int wall_length, int rays_count, float ray_angle)
 {
 	int		count;
-	int		x;
 	int		y;
 	float	step;
 	float	y_text;
 	float	x_text;
-	int		ty_off;
-	int j;
 
-	ty_off = 0;
 	step = (1.0 * TEXTURE) / wall_length;
-	if ((int) wall_length > HEIGHT)
-	{
-		ty_off = ((int) wall_length - HEIGHT) / 2.0;
-		wall_length = HEIGHT;
-	}
 	count = 0;
-
-	x = rays_count;
-	j = 0;
-	while ( j < (HEIGHT / 2) - ((int) wall_length / 2))
+	y = 0;
+	while (y < (HEIGHT / 2) - ((int) wall_length / 2))
+		my_pixel_put(&(data->img), rays_count, y++,
+			rgb_to_hex(data->textures->ceiling));
+	y_text = calc_offset(&wall_length) * step;
+	while (count < (int) wall_length)
 	{
-		my_pixel_put(&(data->img), x, j,rgb_to_hex(data->textures->ceiling));
-		j++;
-
-	}
-	y = (HEIGHT / 2) - ((int) wall_length / 2);
-	y_text = ty_off * step;
-	while (count < (int) wall_length && x < WIDTH && y < HEIGHT && x >= 0 \
-		&& y >= 0)
-	{
-		x_text = get_x(data, flag, ray_angle);
-		my_pixel_put(&(data->img), x, y, get_color(data, (int) x_text, \
-			(int) y_text, ray_angle, flag));
+		x_text = get_x(data, ray_angle);
+		my_pixel_put(&(data->img), rays_count, y, get_color(data, (int) x_text, \
+			(int) y_text, ray_angle));
 		y_text += step;
 		y++;
 		count++;
 	}
-	j = y;
-	while ( j < HEIGHT )
-	{
-		my_pixel_put(&(data->img), x, j,rgb_to_hex(data->textures->floor));
-		j++;
-
-	}
+	while (y < HEIGHT)
+		my_pixel_put(&(data->img), rays_count, y++,
+			rgb_to_hex(data->textures->floor));
 }
