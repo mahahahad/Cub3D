@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 16:58:46 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/28 19:11:40 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
  * ************ */
 
 # include <fcntl.h>
+# include "mlx.h"
+# include <math.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include "utils.h"
-# include "mlx.h"
-# include <math.h>
-#include <stdio.h>
 
 # define SQUARE 32
 # define TEXTURE 64
@@ -65,15 +64,16 @@ typedef struct s_coords
 
 typedef struct s_player
 {
-	char	direction;
-	int		angle;
-	int		angle_multiplier;
+	char		direction;
+	int			angle;
+	int			angle_multiplier;
 	float		x;
 	float		y;
 	t_coords	velocity;
 }	t_player;
 
-typedef struct s_img {
+typedef struct s_img
+{
 	void	*img;
 	int		*img_pixels_ptr;
 	int		bits_per_pixel;
@@ -88,16 +88,16 @@ typedef struct s_data
 	t_img		img;
 	t_map		*map;
 	t_textures	*textures;
-	t_img       north;
+	t_img		north;
 	int			nh;
 	int			nw;
-	t_img       south;
+	t_img		south;
 	int			sh;
 	int			sw;
-	t_img       east;
+	t_img		east;
 	int			eh;
 	int			ew;
-	t_img       west;
+	t_img		west;
 	int			wh;
 	int			ww;
 	t_player	*player;
@@ -159,20 +159,17 @@ typedef enum e_texture_types
  * ******************* */
 
 // Setup
-void	init_data(t_data *data);
-void init_angle(t_data *data);
+int		init_data(char *map_path, t_data *data);
+void	init_angle(t_data *data);
 int		are_args_valid(int argc, char **argv);
 
 // rendering
-void  draw_square(int i, int j,t_data *data, int col);
 void	my_pixel_put(t_img *img, int x, int y, int color);
-void render_map(t_data *data);
-void draw_player(double i, double j, t_data *data);
-void draw_background(t_data *data);
+
 // raycasting
-void raycast(t_data *data);
+void	raycast(t_data *data);
 float	cal_length(t_data *data, float x, float y);
-int	check_all(t_data *data, float x, float y);
+int		check_all(t_data *data, float x, float y);
 
 // Handlers
 int		handle_destroy(t_data *data);
@@ -183,15 +180,19 @@ int		handle_keyrelease(int keysym, t_data *data);
 int		append_map_content(t_data *data, char *processed_line, char *line);
 int		assign_texture(t_texture_type type, char *texture, t_data *data);
 int		is_map_valid(t_data *data);
-int		process_map(t_data *data);
+bool	is_num(char *num);
+bool	is_set(t_data *data, t_texture_type type);
 int		is_surrounded_by_walls(t_data *data);
+int		process_map(t_data *data);
 void	set_texture_ids(char *texture_ids[7]);
+int		set_rgb_values(int texture_channels[3], char *line);
+int		verify_colour(int texture_channels[3]);
 
 // textures
-int	save_images(t_data *data);
 void	draw_image(t_data *data, int wall_length, int rays_count, \
 	float ray_angle);
-	int	rgb_to_hex(int rgb[3]);
+int		save_images(t_data *data);
+int		rgb_to_hex(int rgb[3]);
 
 // Cleanup
 void	free_textures(t_textures *textures);

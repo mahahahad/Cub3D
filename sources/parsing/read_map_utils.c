@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 23:26:14 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/25 21:32:17 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 16:13:14 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,50 +74,4 @@ bool	is_num(char *num)
 		i++;
 	}
 	return (true);
-}
-
-int	set_rgb_values(int texture_channels[3], char *line)
-{
-	char	**str_color_values;
-
-	while (*line == ' ')
-		line++;
-	str_color_values = ft_split(line, ',');
-	if (ft_tablen(str_color_values) != 3 \
-		|| !is_num(str_color_values[0]) \
-		|| !is_num(str_color_values[1]) \
-		|| !is_num(str_color_values[2]))
-		return (ft_err("Incorrect colour format provided."));
-	texture_channels[0] = ft_atoi(str_color_values[0]);
-	texture_channels[1] = ft_atoi(str_color_values[1]);
-	texture_channels[2] = ft_atoi(str_color_values[2]);
-	if (verify_colour(texture_channels) == EXIT_FAILURE)
-		return (ft_err("Colours must be in 0 - 255 range."));
-	ft_freetab(str_color_values);
-	return (EXIT_SUCCESS);
-}
-
-int	assign_texture(t_texture_type type, char *texture, t_data *data)
-{
-	if (is_set(data, type) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (type == NORTH)
-		data->textures->north = ft_strtrim(texture, WHITESPACE);
-	else if (type == EAST)
-		data->textures->east = ft_strtrim(texture, WHITESPACE);
-	else if (type == WEST)
-		data->textures->west = ft_strtrim(texture, WHITESPACE);
-	else if (type == SOUTH)
-		data->textures->south = ft_strtrim(texture, WHITESPACE);
-	else if (type == FLOOR)
-	{
-		if (set_rgb_values(data->textures->floor, texture) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-	}
-	else if (type == CEILING)
-	{
-		if (set_rgb_values(data->textures->ceiling, texture) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
 }

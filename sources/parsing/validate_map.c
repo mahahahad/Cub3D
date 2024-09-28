@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:37:11 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/27 15:05:48 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/28 18:04:15 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	update_player(t_data *data, int x, int y)
 {
 	if (data->player->direction)
-		return (ft_err("Multiple players found"));
+		return (ft_err("Multiple players found."));
 	data->player->direction = data->map->grid[y][x];
 	data->player->y = y ;
 	data->player->x = x;
@@ -72,10 +72,12 @@ int	has_required_config(t_data *data)
 		return (ft_err("No south texture detected"));
 	else if (are_textures_valid(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	// else if (!data->textures->floor || !data->textures->floor[0])
-	// 	return (ft_err("No floor colour detected"));
-	// else if (!data->textures->ceiling || !data->textures->ceiling[0])
-	// 	return (ft_err("No ceiling colour detected"));
+	else if (!data->textures->floor[0] || !data->textures->floor[1] \
+		|| !data->textures->floor[2])
+		return (ft_err("No floor colour detected"));
+	else if (!data->textures->ceiling[0] || !data->textures->ceiling[1] \
+		|| !data->textures->ceiling[2])
+		return (ft_err("No ceiling colour detected"));
 	else if (!data->map->full)
 		return (ft_err("No map found"));
 	else if (has_invalid_chars(data, data->player) == EXIT_FAILURE)
@@ -88,7 +90,7 @@ int	is_map_valid(t_data *data)
 	data->map->grid = ft_split(data->map->full, '\n');
 	if (has_required_config(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	else if (is_surrounded_by_walls(data) == EXIT_FAILURE)
+	if (is_surrounded_by_walls(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -6,18 +6,22 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 22:43:01 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/18 22:46:40 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 19:20:40 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	init_map(t_map *map)
+int	init_map(char *map_path, t_data *data)
 {
-	map->fd = 0;
-	map->rows = 0;
-	map->full = NULL;
-	map->grid = NULL;
+	data->map->fd = 0;
+	data->map->rows = 0;
+	data->map->full = NULL;
+	data->map->grid = NULL;
+	data->map->fd = open(map_path, O_RDONLY);
+	if (data->map->fd < 0)
+		return (ft_err("Map could not be opened. Does it exist?"));
+	return (EXIT_SUCCESS);
 }
 
 void	init_angle(t_data *data)
@@ -62,18 +66,20 @@ void	init_player(t_player *player)
  *
  * @param t_data* data
 */
-void	init_data(t_data *data)
+int	init_data(char *map_path, t_data *data)
 {
 	data->map = malloc(sizeof(t_map));
 	data->player = malloc(sizeof(t_player));
 	data->textures = malloc(sizeof(t_textures));
-	init_map(data->map);
+	if (init_map(map_path, data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	init_player(data->player);
 	init_textures(data->textures);
-	data->mlx_ptr = NULL;
-	data->win_ptr = NULL;
-	data->hx = 0;
-	data->hy = 0;
-	data->vx = 0;
-	data->vy = 0;
+	// data->mlx_ptr = NULL;
+	// data->win_ptr = NULL;
+	// data->hx = 0;
+	// data->hy = 0;
+	// data->vx = 0;
+	// data->vy = 0;
+	return (EXIT_SUCCESS);
 }

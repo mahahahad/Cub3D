@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 23:40:02 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/18 21:50:34 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 15:01:46 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ bool	is_closed(t_data *data, char **visited, int x, int y)
 }
 
 /**
- * @brief Recursively spread outwards starting from the players position to 
+ * @brief Recursively spread outwards starting from the players position to
  * check if the tiles that are available to move to are enclosed within walls
  * or not.
- * 
- * @param data 
- * @return int 
+ *
+ * @param data
+ * @return int
  */
 int	is_surrounded_by_walls(t_data *data)
 {
@@ -46,7 +46,8 @@ int	is_surrounded_by_walls(t_data *data)
 
 	visited = ft_tabdup(data->map->grid, 1);
 	if (!is_closed(data, visited, data->player->x, data->player->y))
-		return (ft_freetab(visited), ft_err("Map must be surrounded by walls"));
+		return (ft_freetab(visited), \
+			ft_err("Map must be surrounded by walls."));
 	ft_freetab(visited);
 	return (EXIT_SUCCESS);
 }

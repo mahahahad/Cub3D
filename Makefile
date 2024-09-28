@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -Wall -Werror -Wextra -O3
+CFLAGS := -Wall -Werror -Wextra -g3 -fsanitize=address
 NAME := cub3D
 INCLUDES := -Iincludes
 
@@ -10,7 +10,7 @@ MODULES := $(SUB_DIRS)
 
 include $(patsubst %, %/module.mk, $(MODULES))
 
-SRCS += $(addprefix $(SRCS_DIR)/, handlers.c cub3D.c)
+SRCS += $(addprefix $(SRCS_DIR)/, cub3D.c)
 
 OBJS := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 

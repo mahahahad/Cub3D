@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:09:15 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/18 22:43:22 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 19:18:48 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,4 @@ void	free_textures(t_textures *textures)
 		free(textures->west);
 	if (textures->south)
 		free(textures->south);
-	// if (textures->floor)
-	// {
-	// 	free(textures->floor[0]);
-	// 	free(textures->floor[1]);
-	// 	free(textures->floor[2]);
-	// }
-	// if (textures->ceiling)
-	// {
-	// 	free(textures->ceiling[0]);
-	// 	free(textures->ceiling[1]);
-	// 	free(textures->ceiling[2]);
-	// }
 }
