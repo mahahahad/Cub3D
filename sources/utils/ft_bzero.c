@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_textures.c                                    :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 22:09:15 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 19:18:48 by maabdull         ###   ########.fr       */
+/*   Created: 2023/07/04 15:57:41 by maabdull          #+#    #+#             */
+/*   Updated: 2024/08/26 16:13:45 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "utils.h"
 
-void	free_textures(t_textures *textures)
+/// @brief
+	// Fills 'n' bytes of 's' with the 0 character
+	// Like memset but with 0 instead of a specific user provided character
+/// @param s
+	// The string to replace
+/// @param n
+	// The number of characters to replace
+void	ft_bzero(void *s, size_t n)
 {
-	if (textures->north)
-		free(textures->north);
-	if (textures->east)
-		free(textures->east);
-	if (textures->west)
-		free(textures->west);
-	if (textures->south)
-		free(textures->south);
+	unsigned char	*str;
+	size_t			i;
+
+	str = (unsigned char *) s;
+	i = 0;
+	if (n)
+		while (i != n)
+			str[i++] = '\0';
 }

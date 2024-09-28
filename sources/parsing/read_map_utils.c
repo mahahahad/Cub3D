@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 23:26:14 by maabdull          #+#    #+#             */
-/*   Updated: 2024/08/21 23:26:51 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 16:13:14 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,34 @@ bool	is_set(t_data *data, t_texture_type type)
 		return (ft_err("Duplicate west texture detected."));
 	if (type == SOUTH && data->textures->south)
 		return (ft_err("Duplicate south texture detected."));
-	if (type == FLOOR && data->textures->floor)
+	if (type == FLOOR && data->textures->floor[0])
 		return (ft_err("Duplicate floor texture detected."));
-	if (type == CEILING && data->textures->ceiling)
+	if (type == CEILING && data->textures->ceiling[0])
 		return (ft_err("Duplicate ceiling texture detected."));
 	return (EXIT_SUCCESS);
 }
 
-int	assign_texture(t_texture_type type, char *texture, t_data *data)
+int	verify_colour(int texture_channels[3])
 {
-	if (is_set(data, type) == EXIT_FAILURE)
+	if (texture_channels[0] < 0 || texture_channels[0] > 255)
 		return (EXIT_FAILURE);
-	if (type == NORTH)
-		data->textures->north = ft_strtrim(texture, WHITESPACE);
-	else if (type == EAST)
-		data->textures->east = ft_strtrim(texture, WHITESPACE);
-	else if (type == WEST)
-		data->textures->west = ft_strtrim(texture, WHITESPACE);
-	else if (type == SOUTH)
-		data->textures->south = ft_strtrim(texture, WHITESPACE);
-	else if (type == FLOOR)
-		data->textures->floor = ft_strtrim(texture, WHITESPACE);
-	else if (type == CEILING)
-		data->textures->ceiling = ft_strtrim(texture, WHITESPACE);
+	if (texture_channels[1] < 0 || texture_channels[1] > 255)
+		return (EXIT_FAILURE);
+	if (texture_channels[2] < 0 || texture_channels[2] > 255)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+bool	is_num(char *num)
+{
+	int	i;
+
+	i = 0;
+	while (num[i])
+	{
+		if ((num[i] < '0' || num[i] > '9') && num[i] != ' ')
+			return (false);
+		i++;
+	}
+	return (true);
 }

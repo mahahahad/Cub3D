@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -Wall -Werror -Wextra -g3
+CFLAGS := -Wall -Werror -Wextra -g3 -fsanitize=address
 NAME := cub3D
 INCLUDES := -Iincludes
 
@@ -10,7 +10,7 @@ MODULES := $(SUB_DIRS)
 
 include $(patsubst %, %/module.mk, $(MODULES))
 
-SRCS += $(addprefix $(SRCS_DIR)/, handlers.c cub3D.c)
+SRCS += $(addprefix $(SRCS_DIR)/, cub3D.c)
 
 OBJS := $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 
@@ -27,7 +27,7 @@ all: $(NAME)
 # Include the appropriate MLX library (based on your OS)
 ifeq ($(UNAME), Darwin)
 MLX_DIR := mlx_Darwin
-MLX_FLAGS += -framework OpenGL -framework AppKit
+MLX_FLAGS += -framework OpenGL -framework AppKit -lm
 MLX := libmlx.dylib
 $(MLX):
 	@echo "\n$(BYELLOW)Making MLX Library$(RESET)"
@@ -36,7 +36,7 @@ $(MLX):
 	@echo "$(BGREEN)Made MLX Library$(RESET)\n"
 else
 MLX_DIR := mlx_Linux
-MLX_FLAGS += -lX11 -lXext
+MLX_FLAGS += -lX11 -lXext -lm
 MLX := $(MLX_DIR)/lib$(MLX_DIR).a
 $(MLX):
 	@echo "\n$(BYELLOW)Making MLX Library$(RESET)"
