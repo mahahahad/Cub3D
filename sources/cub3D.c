@@ -6,11 +6,12 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 19:22:07 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 23:38:58 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <stdio.h>
 
 void	update_velocity(t_data *data, float *new_x, float *new_y)
 {
@@ -51,7 +52,6 @@ void	move_player(t_data *data)
 		data->player->y += new_y;
 }
 
-
 /**
  * @brief Update the players location and angle in the data struct
  * based on the keys currently being pressed
@@ -69,6 +69,14 @@ void	update_player_info(t_data *data)
 
 int	update_frame(t_data *data)
 {
+	int	mouse_x;
+	int	mouse_y;
+
+	mouse_x = 0;
+	mouse_y = 0;
+	mlx_mouse_get_pos(data->mlx_ptr, data->win_ptr, &mouse_x, &mouse_y);
+	data->player->angle += -0.9 * (mouse_x - data->mouse_pos.x);
+	data->mouse_pos.x = mouse_x;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	update_player_info(data);
 	raycast(data);
@@ -96,6 +104,9 @@ int	main(int argc, char **argv)
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "cub3D");
 	mlx_do_key_autorepeatoff(data->mlx_ptr);
+	mlx_mouse_hide(data->mlx_ptr, data->win_ptr);
+	mlx_mouse_move(data->mlx_ptr, data->win_ptr, WIDTH / 2, HEIGHT / 2);
+	mlx_mouse_get_pos(data->mlx_ptr, data->win_ptr, &data->mouse_pos.x, &data->mouse_pos.y);
 	data->img.img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	data->img.img_pixels_ptr = (int *)(mlx_get_data_addr(data->img.img,
 				&(data->img.bits_per_pixel),

@@ -6,11 +6,12 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:18:16 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/28 18:04:30 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 22:01:51 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+#include <stdio.h>
 
 t_img	get_image(t_data *data, float ray_angle, int flag)
 {
@@ -34,13 +35,13 @@ float	get_x(t_data *data, float ray_angle)
 	{
 		x_text = (int) data->hx % TEXTURE ;
 		if (ray_angle > 180)
-			x_text = 31 - x_text;
+			x_text = TEXTURE - 1 - x_text;
 	}
 	if (data->flag == 1)
 	{
 		x_text = (int) data->vy % TEXTURE;
 		if (ray_angle > 90 && ray_angle < 270)
-			x_text = 31 - x_text;
+			x_text = TEXTURE - 1 - x_text;
 	}
 	return (x_text);
 }

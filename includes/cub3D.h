@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 19:11:40 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 23:07:15 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define SQUARE 32
 # define TEXTURE 64
 # define SPEED 0.005
-# define SENSITIVITY 0.005
+# define SENSITIVITY 0.15
 # define PI 3.14159265359
 # define WIDTH 1024
 # define HEIGHT 512
@@ -106,6 +106,7 @@ typedef struct s_data
 	float		vx;
 	float		vy;
 	int			flag;
+	t_coords	mouse_pos;
 }	t_data;
 
 typedef enum e_texture_types
