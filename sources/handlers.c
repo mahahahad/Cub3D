@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/27 19:32:24 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/28 14:29:05 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ int	handle_keyrelease(int keysym, t_data *data)
 		data->player->angle_multiplier--;
 	else if (keysym == KEY_ARROW_RIGHT)
 		data->player->angle_multiplier++;
-	// print_velocity(data);
 	return (0);
 }
 
@@ -135,6 +134,5 @@ int	handle_keypress(int keysym, t_data *data)
 		data->player->angle_multiplier++;
 	else if (keysym == KEY_ARROW_RIGHT)
 		data->player->angle_multiplier--;
-	// print_velocity(data);
 	return (0);
 }
