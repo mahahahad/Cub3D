@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 13:49:47 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/28 14:21:00 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,27 +74,27 @@ void	update_player_info(t_data *data)
 	new_y = 0.0;
 	if (data->player->velocity.y == -1)
 	{
-		new_y = -sin(data->player->angle * PI / 180);
-		new_x = cos(data->player->angle * PI / 180);
+		new_y += -sin(data->player->angle * PI / 180);
+		new_x += cos(data->player->angle * PI / 180);
 	}
 	if (data->player->velocity.x == -1)
 	{
-		new_y = -cos(data->player->angle * PI / 180);
-		new_x = -sin(data->player->angle * PI / 180);
+		new_y += -cos(data->player->angle * PI / 180);
+		new_x += -sin(data->player->angle * PI / 180);
 	}
 	if (data->player->velocity.y == 1)
 	{
-		new_y = sin(data->player->angle * PI / 180);
-		new_x = -cos(data->player->angle * PI / 180);
+		new_y += sin(data->player->angle * PI / 180);
+		new_x += -cos(data->player->angle * PI / 180);
 	}
 	if (data->player->velocity.x == 1)
 	{
-		new_y = cos((data->player->angle) * PI / 180);
-		new_x = sin((data->player->angle) * PI / 180);
+		new_y += cos((data->player->angle) * PI / 180);
+		new_x += sin((data->player->angle) * PI / 180);
 	}
-	if (data->map->grid[(int)(data->player->y) / SQUARE][(int)(data->player->x + new_x) / SQUARE] != '1')
+	if (data->map->grid[(int)(data->player->y) / SQUARE][(int)(data->player->x + new_x * 4) / SQUARE] != '1')
 		data->player->x += new_x;
-	if (data->map->grid[(int)(data->player->y + new_y) / SQUARE][(int)(data->player->x) / SQUARE] != '1')
+	if (data->map->grid[(int)(data->player->y + new_y * 4) / SQUARE][(int)(data->player->x) / SQUARE] != '1')
 		data->player->y += new_y;
 	data->player->angle += data->player->angle_multiplier;
 	if (data->player->angle < 0)
