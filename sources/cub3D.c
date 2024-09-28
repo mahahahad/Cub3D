@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/25 22:23:39 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 13:49:47 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ void	print_info(t_data data)
 		printf("South texture: ");
 		puts(data.textures->south);
 	}
-	if (data.textures->floor)
-	{
-		printf("Floor colour: ");
-		printf("%d, %d, %d\n", data.textures->floor[0], data.textures->floor[1], data.textures->floor[2]);
-	}
-	if (data.textures->ceiling)
-	{
-		printf("Ceiling colour: ");
-		printf("%d, %d, %d\n", data.textures->ceiling[0], data.textures->ceiling[1], data.textures->ceiling[2]);
-	}
+	// if (data.textures->floor)
+	// {
+	// 	printf("Floor colour: ");
+	// 	printf("%d, %d, %d\n", data.textures->floor[0], data.textures->floor[1], data.textures->floor[2]);
+	// }
+	// if (data.textures->ceiling)
+	// {
+	// 	printf("Ceiling colour: ");
+	// 	printf("%d, %d, %d\n", data.textures->ceiling[0], data.textures->ceiling[1], data.textures->ceiling[2]);
+	// }
 	if (data.map->full)
 	{
 		puts("\nMap: ");
@@ -62,8 +62,8 @@ void set_player_pixs(t_data *data)
 /**
  * @brief Update the players location and angle in the data struct
  * based on the keys currently being pressed
- * 
- * @param data 
+ *
+ * @param data
  */
 void	update_player_info(t_data *data)
 {
@@ -106,7 +106,7 @@ int	update_frame(t_data *data)
 {
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	update_player_info(data);
-	draw_background(data);
+	// draw_background(data);
 	raycast(data);
 	return (mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0));
 }

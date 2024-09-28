@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:04:39 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/25 23:08:18 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:46:10 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ float	vertical_distance(float ray_angle, t_data *data)
 	return (length);
 }
 
-int	wall_length(t_data *data, float ray_length, float ray_angle)
+float	wall_length(t_data *data, float ray_length, float ray_angle)
 {
 	float	ppd;
 	float	wall_length;
@@ -102,8 +102,8 @@ int	wall_length(t_data *data, float ray_length, float ray_angle)
 	ray_length *= cos((ray_angle - data->player->angle) * (PI / 180));
 	ppd = (WIDTH / 2) / tan(30 * (PI / 180));
 	wall_length = (SQUARE / ray_length) * ppd;
-	// if (wall_length > HEIGHT)
-	// 	wall_length = HEIGHT - 2;
+	// if (wall_length> HEIGHT)
+	// 	wall_length = HEIGHT;
 	return (wall_length);
 }
 
@@ -175,12 +175,12 @@ void	raycast(t_data *data)
 		if (ver_dist < hor_dist)
 		{
 			w_length = wall_length(data, ver_dist, ray_angle);
-			draw_image(data, w_length, rays_count, 1, ray_angle);
+			draw_image(data, roundf(w_length), rays_count, 1, ray_angle);
 		}
 		else
 		{
 			w_length = wall_length(data, hor_dist, ray_angle);
-			draw_image(data, w_length, rays_count, 0, ray_angle);
+			draw_image(data, roundf(w_length), rays_count, 0, ray_angle);
 		}
 		ray_angle -= step_angle;
 		if (roundf(ray_angle) <= 0)

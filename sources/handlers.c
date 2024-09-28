@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/25 20:03:31 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/27 19:32:24 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	handle_destroy(t_data *data)
 void move_up(t_data *data)
 {
 	int new_y;
-	int new_x; 
+	int new_x;
 
 	data->player->velocity.y--;
 	new_y = (int) round(data->player->y - \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/25 22:22:15 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 13:48:42 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,7 @@ void	set_texture_ids(char *texture_ids[7]);
 int	save_images(t_data *data);
 void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
 	float ray_angle);
+	int	rgb_to_hex(int rgb[3]);
 
 // Cleanup
 void	free_textures(t_textures *textures);

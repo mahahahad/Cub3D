@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 18:18:16 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/25 23:24:40 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 13:49:13 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 // x and y are the coordinates in the wall i have to find the corresponding
 //  x and y pixel in the texture but as we know in the texture the image is not
-// have the same format as the wall so we have to find the offset i mean the 
+// have the same format as the wall so we have to find the offset i mean the
 // image is contain of bits and each group is a single pixel
-// so the issue is i have to find the row first and then the bits that made up 
+// so the issue is i have to find the row first and then the bits that made up
 // the pixel
 
 int	save_images(t_data *data)
@@ -92,14 +92,49 @@ int	get_color(t_data *data, int x, int y, float ray_angle, int flag)
 	int		*image_in_pixs;
 	int		color;
 	int		offset;
+	// if (y < 0 || y >= TEXTURE || x < 0 || x >= TEXTURE)
+	// 	return(0) ;
 
-	offset = (y * (data->north.line_len / 4) + x);
 	image = get_image(data, ray_angle, flag);
+	offset = (y * (image.line_len / 4) + x);
 	image_in_pixs = image.img_pixels_ptr;
 	color = *(image_in_pixs + offset);
 	return (color);
 }
 
+// void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
+// 	float ray_angle)
+// {
+// 	int		count;
+// 	int		x;
+// 	int		y;
+// 	float	step;
+// 	float	y_text;
+// 	float	x_text;
+// 	int		ty_off;
+
+// 	ty_off = 0;
+// 	step = (1.0 * TEXTURE) / (wall_length);
+// 	if ( wall_length > HEIGHT)
+// 	{
+// 		ty_off = ( wall_length - HEIGHT)/2.0 ;
+// 		wall_length = HEIGHT;
+// 	}
+// 	count = 0;
+// 	x = rays_count;
+// 	y = (HEIGHT / 2) - ( wall_length / 2);
+// 	y_text = ty_off * step;
+// 	while (count <=  wall_length  && x >= 0
+// 		&& y >= 0)
+// 	{
+// 		x_text = get_x(data, flag, ray_angle);
+// 		my_pixel_put(&(data->img), x, y, get_color(data, (int) x_text, \
+// 			(int) y_text, ray_angle, flag));
+// 		y_text += step;
+// 		y++;
+// 		count++;
+// 	}
+// }
 void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
 	float ray_angle)
 {
@@ -110,6 +145,7 @@ void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
 	float	y_text;
 	float	x_text;
 	int		ty_off;
+	int j;
 
 	ty_off = 0;
 	step = (1.0 * TEXTURE) / wall_length;
@@ -119,7 +155,15 @@ void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
 		wall_length = HEIGHT;
 	}
 	count = 0;
+
 	x = rays_count;
+	j = 0;
+	while ( j < (HEIGHT / 2) - ((int) wall_length / 2))
+	{
+		my_pixel_put(&(data->img), x, j,rgb_to_hex(data->textures->ceiling));
+		j++;
+
+	}
 	y = (HEIGHT / 2) - ((int) wall_length / 2);
 	y_text = ty_off * step;
 	while (count < (int) wall_length && x < WIDTH && y < HEIGHT && x >= 0 \
@@ -131,5 +175,12 @@ void	draw_image(t_data *data, int wall_length, int rays_count, int flag, \
 		y_text += step;
 		y++;
 		count++;
+	}
+	j = y;
+	while ( j < HEIGHT )
+	{
+		my_pixel_put(&(data->img), x, j,rgb_to_hex(data->textures->floor));
+		j++;
+
 	}
 }

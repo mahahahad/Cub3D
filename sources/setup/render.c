@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:01:22 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/18 22:24:55 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:41:58 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	my_pixel_put(t_img *img, int x, int y, int color)
 {
 	int	offset;
+	if (y < 0 || y >= HEIGHT || x < 0 || x >= WIDTH)
+		return ;
 
 	offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
 	img->img_pixels_ptr[offset / 4] = color;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:37:11 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/25 21:07:08 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:05:48 by ryagoub          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int	has_required_config(t_data *data)
 		return (ft_err("No south texture detected"));
 	else if (are_textures_valid(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	else if (!data->textures->floor || !data->textures->floor[0])
-		return (ft_err("No floor colour detected"));
-	else if (!data->textures->ceiling || !data->textures->ceiling[0])
-		return (ft_err("No ceiling colour detected"));
+	// else if (!data->textures->floor || !data->textures->floor[0])
+	// 	return (ft_err("No floor colour detected"));
+	// else if (!data->textures->ceiling || !data->textures->ceiling[0])
+	// 	return (ft_err("No ceiling colour detected"));
 	else if (!data->map->full)
 		return (ft_err("No map found"));
 	else if (has_invalid_chars(data, data->player) == EXIT_FAILURE)
