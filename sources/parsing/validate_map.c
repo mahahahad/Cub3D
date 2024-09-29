@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:37:11 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/29 20:50:17 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 21:00:57 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,37 @@ int	has_invalid_chars(t_data *data, t_player *player)
 	return (EXIT_SUCCESS);
 }
 
+int	check_texture_extension(char *texture)
+{
+	int 	texture_len;
+	char	*texture_ext;
+
+	texture_len = ft_strlen(texture);
+	if (texture_len <= 4)
+		return (EXIT_FAILURE);
+	texture_ext = ft_substr(texture, texture_len - 4, 4);
+	if (ft_strncmp(texture_ext, ".xpm", 4))
+		return (free(texture_ext), EXIT_FAILURE);
+	return (free(texture_ext), EXIT_SUCCESS);
+}
+
+int	check_texture_extensions(t_data *data)
+{
+	if (check_texture_extension(data->textures->north) == EXIT_FAILURE)
+		return (ft_err("North texture is not an xpm file."));
+	if (check_texture_extension(data->textures->east) == EXIT_FAILURE)
+		return (ft_err("East texture is not an xpm file."));
+	if (check_texture_extension(data->textures->west) == EXIT_FAILURE)
+		return (ft_err("West texture is not an xpm file."));
+	if (check_texture_extension(data->textures->south) == EXIT_FAILURE)
+		return (ft_err("South texture is not an xpm file."));
+	return (EXIT_SUCCESS);
+}
+
 int	are_textures_valid(t_data *data)
 {
+	if (check_texture_extensions(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (open(data->textures->north, O_RDONLY) < 0)
 		return (ft_err("North texture could not be opened."));
 	else if (open(data->textures->east, O_RDONLY) < 0)
