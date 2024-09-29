@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/29 19:54:23 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 22:10:59 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,11 @@ typedef enum e_texture_types
  * ******************* */
 
 // Setup
-int		init_data(char *map_path, t_data *data);
-void	init_angle(t_data *data);
 int		are_args_valid(int argc, char **argv);
+int		init_data(char *map_path, t_data *data);
+int		init_images(t_data *data);
+void	init_player_data(t_data *data);
+void	launch_handlers(t_data *data);
 
 // rendering
 void	my_pixel_put(t_img *img, int x, int y, int color);
@@ -184,6 +186,7 @@ int		handle_keyrelease(int keysym, t_data *data);
 // Parsing
 int		append_map_content(t_data *data, char *processed_line, char *line);
 int		assign_texture(t_texture_type type, char *texture, t_data *data);
+int		check_texture_extensions(t_data *data);
 int		is_map_valid(t_data *data);
 bool	is_num(char *num);
 bool	is_set(t_data *data, t_texture_type type);

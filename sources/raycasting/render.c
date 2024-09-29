@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 12:01:22 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/29 20:45:34 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 22:09:37 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ int	rgb_to_hex(int rgb[3])
 	return (rgb[0] << 16 | rgb[1] << 8 | rgb[2]);
 }
 
-int get_pixel_color(char c)
+int	get_pixel_color(char c)
 {
 	if (c == '1')
 		return (0x000000);
-	if (c == '0' || c == 'N' || c == 'E'|| c == 'W'|| c == 'S')
+	if (c == '0' || c == 'N' || c == 'E' || c == 'W' || c == 'S')
 		return (0xFFFFFF);
 	return (0x000000);
 }
@@ -66,10 +66,10 @@ void	draw_square(int i, int j, t_data *data, int col)
  * 
  * @param data 
  */
-int render_minimap(t_data *data)
+int	render_minimap(t_data *data)
 {
-	int j;
-	int i;
+	int	j;
+	int	i;
 
 	i = 0;
 	j = 0;
@@ -78,7 +78,7 @@ int render_minimap(t_data *data)
 		i = 0;
 		while (i < (int) ft_strlen(data->map->grid[j]))
 		{
-			if(data->map->grid[j][i] != ' ')
+			if (data->map->grid[j][i] != ' ')
 				draw_square(i * GRID_PIX_SIZE, j * GRID_PIX_SIZE, data, \
 					get_pixel_color(data->map->grid[j][i]));
 			i++;
