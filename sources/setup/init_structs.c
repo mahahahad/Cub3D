@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 22:43:01 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 19:20:40 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 22:11:26 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	init_map(char *map_path, t_data *data)
 	return (EXIT_SUCCESS);
 }
 
-void	init_angle(t_data *data)
+void	init_player_data(t_data *data)
 {
 	if (data->player->direction == 'N')
 		data->player->angle = 90;
@@ -34,6 +34,8 @@ void	init_angle(t_data *data)
 		data->player->angle = 0;
 	else if (data->player->direction == 'W')
 		data->player->angle = 180;
+	data->player->x = (data->player->x * SQUARE) + (SQUARE / 2);
+	data->player->y = (data->player->y * SQUARE) + (SQUARE / 2);
 }
 
 void	init_textures(t_textures *textures)
@@ -42,12 +44,12 @@ void	init_textures(t_textures *textures)
 	textures->east = NULL;
 	textures->west = NULL;
 	textures->south = NULL;
-	textures->floor[0] = 0;
-	textures->floor[1] = 0;
-	textures->floor[2] = 0;
-	textures->ceiling[0] = 0;
-	textures->ceiling[1] = 0;
-	textures->ceiling[2] = 0;
+	textures->floor[0] = -1;
+	textures->floor[1] = -1;
+	textures->floor[2] = -1;
+	textures->ceiling[0] = -1;
+	textures->ceiling[1] = -1;
+	textures->ceiling[2] = -1;
 }
 
 void	init_player(t_player *player)
@@ -75,11 +77,5 @@ int	init_data(char *map_path, t_data *data)
 		return (EXIT_FAILURE);
 	init_player(data->player);
 	init_textures(data->textures);
-	// data->mlx_ptr = NULL;
-	// data->win_ptr = NULL;
-	// data->hx = 0;
-	// data->hy = 0;
-	// data->vx = 0;
-	// data->vy = 0;
 	return (EXIT_SUCCESS);
 }

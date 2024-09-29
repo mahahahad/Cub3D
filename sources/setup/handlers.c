@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:14:20 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 17:20:41 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 21:43:24 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 int	handle_destroy(t_data *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_image(data->mlx_ptr, data->img.img);
+	mlx_destroy_image(data->mlx_ptr, data->minimap.img);
+	mlx_destroy_display(data->mlx_ptr);
 	close(data->map->fd);
 	free_textures(data->textures);
 	ft_freetab(data->map->grid);

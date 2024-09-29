@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryagoub <ryagoub@student.42.fr>            +#+  +:+       +#+        */
+/*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 15:29:44 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/28 15:33:12 by ryagoub          ###   ########.fr       */
+/*   Updated: 2024/09/29 19:07:33 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	check_all(t_data *data, float x, float y)
 	return (1);
 }
 
-float	cal_length(t_data *data, float x, float y)
+inline float	cal_length(t_data *data, float x, float y)
 {
 	return (sqrt(pow(data->player->x - x, 2) + pow(data->player->y - y, 2)));
 }

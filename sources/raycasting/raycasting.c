@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 15:04:39 by ryagoub           #+#    #+#             */
-/*   Updated: 2024/09/28 17:43:49 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/28 21:47:22 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	raycast(t_data *data)
 	float	step_angle;
 	float	ray_angle;
 	int		rays_count;
-	float	w_length;
 	int		i;
 
 	ray_angle = data->player->angle + 30;
@@ -121,7 +120,7 @@ void	raycast(t_data *data)
 	i = 0;
 	while (rays_count < WIDTH)
 	{
-		w_length = return_wall_length(data, ray_angle, rays_count);
+		return_wall_length(data, ray_angle, rays_count);
 		ray_angle -= step_angle;
 		if (roundf(ray_angle) <= 0)
 			ray_angle = 360;

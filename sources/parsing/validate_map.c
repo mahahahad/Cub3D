@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 22:37:11 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 18:04:15 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 22:10:37 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	has_invalid_chars(t_data *data, t_player *player)
 			if (ft_strchr("NEWS", data->map->grid[y][x]))
 				if (update_player(data, x, y) == EXIT_FAILURE)
 					return (EXIT_FAILURE);
+			if (x > data->map->max_cols)
+				data->map->max_cols = x;
 		}
 	}
 	if (!player->direction)
@@ -49,6 +51,8 @@ int	has_invalid_chars(t_data *data, t_player *player)
 
 int	are_textures_valid(t_data *data)
 {
+	if (check_texture_extensions(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (open(data->textures->north, O_RDONLY) < 0)
 		return (ft_err("North texture could not be opened."));
 	else if (open(data->textures->east, O_RDONLY) < 0)
@@ -72,11 +76,11 @@ int	has_required_config(t_data *data)
 		return (ft_err("No south texture detected"));
 	else if (are_textures_valid(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	else if (!data->textures->floor[0] || !data->textures->floor[1] \
-		|| !data->textures->floor[2])
+	else if (data->textures->floor[0] < 0 || data->textures->floor[1] < 0 \
+		|| data->textures->floor[2] < 0)
 		return (ft_err("No floor colour detected"));
-	else if (!data->textures->ceiling[0] || !data->textures->ceiling[1] \
-		|| !data->textures->ceiling[2])
+	else if (data->textures->ceiling[0] < 0 || data->textures->ceiling[1] < 0 \
+		|| data->textures->ceiling[2] < 0)
 		return (ft_err("No ceiling colour detected"));
 	else if (!data->map->full)
 		return (ft_err("No map found"));
