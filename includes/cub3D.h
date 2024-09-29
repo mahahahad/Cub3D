@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:19 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 23:07:15 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 19:54:23 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "utils.h"
 
 # define SQUARE 32
+# define GRID_PIX_SIZE 4
 # define TEXTURE 64
 # define SPEED 0.005
 # define SENSITIVITY 0.15
@@ -42,6 +43,7 @@ typedef struct s_map
 {
 	int		fd;
 	int		rows;
+	int		max_cols;
 	char	*full;
 	char	**grid;
 }	t_map;
@@ -107,6 +109,7 @@ typedef struct s_data
 	float		vy;
 	int			flag;
 	t_coords	mouse_pos;
+	t_img		minimap;
 }	t_data;
 
 typedef enum e_texture_types
@@ -166,6 +169,7 @@ int		are_args_valid(int argc, char **argv);
 
 // rendering
 void	my_pixel_put(t_img *img, int x, int y, int color);
+int		render_minimap(t_data *data);
 
 // raycasting
 void	raycast(t_data *data);

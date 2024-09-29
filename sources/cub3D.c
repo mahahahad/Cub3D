@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 17:51:17 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 23:38:58 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 19:59:59 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	update_player_info(t_data *data)
 
 int	update_frame(t_data *data)
 {
+	int	ret_val;
 	int	mouse_x;
 	int	mouse_y;
 
@@ -80,8 +81,43 @@ int	update_frame(t_data *data)
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	update_player_info(data);
 	raycast(data);
-	return (mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, \
-		data->img.img, 0, 0));
+	ret_val = mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, 
+		data->img.img, 0, 0);
+	render_minimap(data);
+	return (ret_val);
+}
+
+// int	handle_mouse_move(int x, int y, t_data *data)
+// {
+// 	printf("%d %d %d\n", data->player->angle, data->mouse_pos.x, x);
+// 	data->mouse_pos.x = x;
+// 	data->mouse_pos.y = y;
+// 	return (0);
+// }
+
+int	create_minimap_image(t_data *data)
+{
+	data->minimap.img = mlx_new_image(data->mlx_ptr, (data->map->max_cols + 1) \
+		* GRID_PIX_SIZE, data->map->rows * GRID_PIX_SIZE);
+	if (data->minimap.img == NULL)
+		return (ft_err("Image could not be created"));
+	data->minimap.img_pixels_ptr = (int *)(mlx_get_data_addr(data->minimap.img,
+		&(data->minimap.bits_per_pixel),
+		&(data->minimap.line_len),
+		&(data->minimap.endian)));
+	return (EXIT_SUCCESS);
+}
+
+int	create_render_image(t_data *data)
+{
+	data->img.img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
+	if (data->img.img == NULL)
+		return (ft_err("Image could not be created"));
+	data->img.img_pixels_ptr = (int *)(mlx_get_data_addr(data->img.img,
+		&(data->img.bits_per_pixel),
+		&(data->img.line_len),
+		&(data->img.endian)));
+	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv)
@@ -104,16 +140,11 @@ int	main(int argc, char **argv)
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HEIGHT, "cub3D");
 	mlx_do_key_autorepeatoff(data->mlx_ptr);
-	mlx_mouse_hide(data->mlx_ptr, data->win_ptr);
-	mlx_mouse_move(data->mlx_ptr, data->win_ptr, WIDTH / 2, HEIGHT / 2);
+	// mlx_mouse_hide(data->mlx_ptr, data->win_ptr);
+	// mlx_mouse_move(data->mlx_ptr, data->win_ptr, WIDTH / 2, HEIGHT / 2);
 	mlx_mouse_get_pos(data->mlx_ptr, data->win_ptr, &data->mouse_pos.x, &data->mouse_pos.y);
-	data->img.img = mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
-	data->img.img_pixels_ptr = (int *)(mlx_get_data_addr(data->img.img,
-				&(data->img.bits_per_pixel),
-				&(data->img.line_len),
-				&(data->img.endian)));
-	if (data->img.img == NULL)
-		return (ft_err("Image could not be created"));
+	create_render_image(data);
+	create_minimap_image(data);
 	data->player->x = (data->player->x * SQUARE) + (SQUARE / 2);
 	data->player->y = (data->player->y * SQUARE) + (SQUARE / 2);
 	if (save_images(data) == EXIT_FAILURE)
@@ -121,6 +152,7 @@ int	main(int argc, char **argv)
 	mlx_hook(data->win_ptr, 2, 1L << 0, handle_keypress, data);
 	mlx_hook(data->win_ptr, 3, 1L << 1, handle_keyrelease, data);
 	mlx_hook(data->win_ptr, 17, 1L << 2, handle_destroy, data);
+	// mlx_hook(data->win_ptr, 6, 1L << 6, handle_mouse_move, data);
 	mlx_loop_hook(data->mlx_ptr, update_frame, data);
 	mlx_loop(data->mlx_ptr);
 	return (EXIT_SUCCESS);

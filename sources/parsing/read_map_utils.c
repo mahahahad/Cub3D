@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 23:26:14 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 16:13:14 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:51:40 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ bool	is_set(t_data *data, t_texture_type type)
 		return (ft_err("Duplicate west texture detected."));
 	if (type == SOUTH && data->textures->south)
 		return (ft_err("Duplicate south texture detected."));
-	if (type == FLOOR && data->textures->floor[0])
+	if (type == FLOOR && data->textures->floor[0] >= 0)
 		return (ft_err("Duplicate floor texture detected."));
-	if (type == CEILING && data->textures->ceiling[0])
+	if (type == CEILING && data->textures->ceiling[0] >= 0)
 		return (ft_err("Duplicate ceiling texture detected."));
 	return (EXIT_SUCCESS);
 }

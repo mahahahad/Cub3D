@@ -6,7 +6,7 @@
 /*   By: maabdull <maabdull@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 22:43:01 by maabdull          #+#    #+#             */
-/*   Updated: 2024/09/28 19:20:40 by maabdull         ###   ########.fr       */
+/*   Updated: 2024/09/29 20:49:43 by maabdull         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	init_textures(t_textures *textures)
 	textures->east = NULL;
 	textures->west = NULL;
 	textures->south = NULL;
-	textures->floor[0] = 0;
-	textures->floor[1] = 0;
-	textures->floor[2] = 0;
-	textures->ceiling[0] = 0;
-	textures->ceiling[1] = 0;
-	textures->ceiling[2] = 0;
+	textures->floor[0] = -1;
+	textures->floor[1] = -1;
+	textures->floor[2] = -1;
+	textures->ceiling[0] = -1;
+	textures->ceiling[1] = -1;
+	textures->ceiling[2] = -1;
 }
 
 void	init_player(t_player *player)
